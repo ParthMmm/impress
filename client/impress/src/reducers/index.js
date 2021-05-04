@@ -1,12 +1,10 @@
 import { combineReducers } from "redux";
-
-const registerReducer = (data = null, action) => {
-  if (action.type === "USER_REGISTER") {
-    return action.payload;
-  }
-  return data;
-};
+import loginReducer from "./loginReducer";
+import registerReducer from "./registerReducer";
+import authReducer from "./authReducer";
 
 export default combineReducers({
-  data: registerReducer,
+  register: registerReducer,
+  secretToken: loginReducer,
+  auth: authReducer,
 });

@@ -1,14 +1,15 @@
 import React, { Component } from "react";
 import { useForm } from "react-hook-form";
 import { connect, useDispatch } from "react-redux";
-import { userLogin } from "../actions";
+import { userRegister } from "../actions";
 import { withRouter } from "react-router-dom";
-function Login(props) {
+
+function Register(props, { history }) {
   const { register, handleSubmit, setValue } = useForm();
   const dispatch = useDispatch();
 
   const onSubmit = (data) => {
-    dispatch(userLogin(data));
+    dispatch(userRegister(data, history));
     console.log(data);
   };
 
@@ -21,7 +22,7 @@ function Login(props) {
           </h1>
           <form onSubmit={handleSubmit(onSubmit)}>
             <div className="flex flex-col bg-white p-10 rounded-lg shadow space-y-6">
-              <h1 className="font-bold text-xl text-center">Log In</h1>
+              <h1 className="font-bold text-xl text-center">Sign up</h1>
 
               <div className="flex flex-col space-y-1">
                 <input
@@ -56,7 +57,7 @@ function Login(props) {
                   type="submit"
                   className="bg-blue-500 text-white font-bold px-5 py-2 rounded focus:outline-none shadow hover:bg-blue-700 transition-colors"
                 >
-                  Log In
+                  Sign Up
                 </button>
               </div>
             </div>
@@ -70,4 +71,4 @@ function Login(props) {
   );
 }
 
-export default connect()(Login);
+export default connect()(withRouter(Register));
