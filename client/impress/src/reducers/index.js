@@ -5,6 +5,5 @@ import authReducer from "./authReducer";
 
 export default combineReducers({
   register: registerReducer,
-  secretToken: loginReducer,
-  auth: authReducer,
+  auth: loginReducer,
 });

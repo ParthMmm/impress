@@ -3,6 +3,15 @@ const mongoose = require("mongoose");
 const localStrategy = require("passport-local").Strategy;
 const UserModel = require("../models/User");
 
+passport.serializeUser((user, done) => {
+  done(null, user.id);
+});
+
+passport.deserializeUser((id, done) => {
+  User.findById(id).then((user) => {
+    done(null, user);
+  });
+});
 passport.use(
   "signup",
   new localStrategy(

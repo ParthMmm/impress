@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import Card from "./Card";
 import Create from "./Create";
-import Profile from "./Profile";
+// import Profile from "./Profile";
 
 export default class Landing extends Component {
   render() {

@@ -1,16 +1,28 @@
-import React, { Component } from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
+import { useHistory } from "react-router-dom";
 import { connect, useDispatch } from "react-redux";
 import { userLogin } from "../actions";
-import { withRouter } from "react-router-dom";
-function Login(props) {
-  const { register, handleSubmit, setValue } = useForm();
+import ErrorAlert from "./ErrorAlert";
+
+function Login({ error, auth, msg }) {
+  const { register, handleSubmit } = useForm();
   const dispatch = useDispatch();
+  const history = useHistory();
 
   const onSubmit = (data) => {
     dispatch(userLogin(data));
     console.log(data);
   };
+
+  // switch (auth) {
+  //   case null:
+
+  //   case true:
+
+  //   default:
+  //     showError(false);
+  // }
 
   return (
     <div>
@@ -46,12 +58,12 @@ function Login(props) {
               </div>
 
               <div className="flex flex-col-reverse sm:flex-row sm:justify-between items-center">
-                <a
+                <button
                   href="#"
                   className="inline-block text-blue-500 hover:text-blue-800 hover:underline"
                 >
                   Forgot your password?
-                </a>
+                </button>
                 <button
                   type="submit"
                   className="bg-blue-500 text-white font-bold px-5 py-2 rounded focus:outline-none shadow hover:bg-blue-700 transition-colors"
@@ -62,12 +74,16 @@ function Login(props) {
             </div>
           </form>
           <div className="flex justify-center text-gray-500 text-sm">
-            <p>&copy;2021. All right reserved.</p>
+            {error === true ? <ErrorAlert /> : <p>Hey!</p>}
           </div>
         </div>
       </div>
     </div>
   );
 }
+function mapStateToProps({ auth }) {
+  return { error: auth.error, auth: auth.authorized, msg: auth.msg };
+}
+const mapDispatchToProps = {};
 
-export default connect()(Login);
+export default connect(mapStateToProps, mapDispatchToProps)(Login);

@@ -1,11 +1,11 @@
-import React, { Component } from "react";
+import React from "react";
 import { useForm } from "react-hook-form";
 import { connect, useDispatch } from "react-redux";
 import { userRegister } from "../actions";
 import { withRouter } from "react-router-dom";
 
 function Register(props, { history }) {
-  const { register, handleSubmit, setValue } = useForm();
+  const { register, handleSubmit } = useForm();
   const dispatch = useDispatch();
 
   const onSubmit = (data) => {
@@ -47,12 +47,9 @@ function Register(props, { history }) {
               </div>
 
               <div className="flex flex-col-reverse sm:flex-row sm:justify-between items-center">
-                <a
-                  href="#"
-                  className="inline-block text-blue-500 hover:text-blue-800 hover:underline"
-                >
+                <button className="inline-block text-blue-500 hover:text-blue-800 hover:underline">
                   Forgot your password?
-                </a>
+                </button>
                 <button
                   type="submit"
                   className="bg-blue-500 text-white font-bold px-5 py-2 rounded focus:outline-none shadow hover:bg-blue-700 transition-colors"
