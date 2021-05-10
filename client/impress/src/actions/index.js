@@ -1,10 +1,13 @@
 import axios from "axios";
 
-import { USER_REGISTER } from "./types";
+import { AUTH_RESET, USER_REGISTER } from "./types";
 import { USER_LOGIN } from "./types";
 import { USER_PROFILE } from "./types";
 import { USER_LOGOUT } from "./types";
 import { LOGIN_ERROR } from "./types";
+import { CURRENT_USER } from "./types";
+import history from "../util/history";
+
 export const userRegister = (data) => async (dispatch) => {
   const res = await axios.post(
     `${process.env.REACT_APP_LOCAL_SERVER}signup`,
@@ -27,6 +30,7 @@ export const userLogin = (data) => async (dispatch) => {
     });
   } else {
     const { token } = res.data;
+    history.push("/");
     dispatch({ type: USER_LOGIN, payload: { token, authorized: true } });
   }
 };
@@ -35,12 +39,19 @@ export const userProfile = (data) => async (dispatch) => {
   const res = await axios.get(
     `${process.env.REACT_APP_LOCAL_SERVER}user/profile?secret_token=${data}`
   );
-  dispatch({ type: USER_PROFILE, payload: res.data });
+  const { user } = res.data;
+  dispatch({ type: USER_PROFILE, payload: user });
 };
 
 export const userLogOut = () => async (dispatch) => {
   const res = await axios.get(
     `${process.env.REACT_APP_LOCAL_SERVER}api/logout`
   );
-  dispatch({ type: USER_LOGOUT, payload: res.data });
+  history.push("/");
+  dispatch({ type: AUTH_RESET });
+};
+
+export const authError = () => (dispatch) => {
+  console.log("error");
+  dispatch({ type: AUTH_RESET, payload: [] });
 };

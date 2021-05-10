@@ -7,6 +7,7 @@ router.get("/profile", (req, res, next) => {
     user: req.user,
     token: req.query.secret_token,
   });
+  return;
 });
 
 module.exports = router;
