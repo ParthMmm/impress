@@ -8,9 +8,22 @@ router.post(
   "/signup",
   passport.authenticate("signup", { session: true }),
   async (req, res, next) => {
-    res.json({
-      message: "Signup successful",
-      user: req.user,
+    // res.json({
+    //   message: "Signup successful",
+    //   user: req.user,
+    // });
+    req.login(req.user, { session: true }, async (error) => {
+      if (error) return next(error);
+
+      const body = {
+        _id: req.user._id,
+        email: req.user.email,
+        username: req.user.username,
+      };
+      const token = jwt.sign({ user: body }, "TOP_SECRET");
+
+      res.json({ authorized: true, token });
+      return;
     });
   }
 );
@@ -28,7 +41,11 @@ router.post("/login", async (req, res, next) => {
       req.login(user, { session: true }, async (error) => {
         if (error) return next(error);
 
-        const body = { _id: user._id, email: user.email };
+        const body = {
+          _id: req.user._id,
+          email: req.user.email,
+          username: req.user.username,
+        };
         const token = jwt.sign({ user: body }, "TOP_SECRET");
 
         res.json({ token });

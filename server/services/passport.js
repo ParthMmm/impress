@@ -16,15 +16,18 @@ passport.use(
   "signup",
   new localStrategy(
     {
-      usernameField: "email",
+      usernameField: "username",
       passwordField: "password",
+      passReqToCallback: true,
     },
-    async (email, password, done) => {
+    async (req, username, password, done) => {
       try {
-        const user = await UserModel.create({ email, password });
+        console.log(req.body.email);
+        const email = req.body.email;
+        const user = await UserModel.create({ email, username, password });
         return done(null, user);
       } catch (error) {
-        return done(error);
+        return done(null, error);
       }
     }
   )
@@ -44,6 +47,12 @@ passport.use(
         if (!user) {
           return done(null, false, { message: "User not found" });
         }
+
+        // const uniqueUsername = await UserModel.findOne({ username });
+
+        // if (!uniqueUsername) {
+        //   return done(null, false, { message: "Username not found" });
+        // }
 
         const validate = await user.isValidPassword(password);
 

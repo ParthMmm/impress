@@ -1,60 +1,67 @@
 import React from "react";
-import { useHistory } from "react-router-dom";
+
 import { connect, useDispatch } from "react-redux";
-import { userProfile } from "../actions";
 import { userLogOut } from "../actions";
-import _ from "lodash";
+import history from "../util/history";
+
 function Header({ auth }) {
-  const history = useHistory();
   const dispatch = useDispatch();
   console.log(auth);
-  console.log(_.isEmpty(auth));
-  const handleClick = () => {
-    // const { secretToken } = state;
-    // dispatch(userProfile(secretToken.token));
-    // history.push("/profile");
-  };
 
   const logOut = () => {
     console.log("aaaaaasdf");
     dispatch(userLogOut());
   };
 
+  const showMenu = () => {
+    console.log("I will show menu");
+  };
+
   switch (auth) {
     case undefined:
       return (
-        <div className="flex flex-row justify-center sticky">
-          <div className="px-2">
-            {" "}
+        <nav class="bg-white flex items-center justify-between flex-wrap bg-teal-500 p-6">
+          <div class="flex items-center flex-shrink-0 text-white mr-6">
+            <span class="text-black font-semibold text-xl tracking-tight">
+              Impress
+            </span>
+          </div>
+          <div class="flex lg:hidden">
             <button
-              onClick={() => history.push("/login")}
-              type="submit"
-              className="bg-blue-500 text-white font-bold px-5 py-2 rounded focus:outline-none shadow hover:bg-blue-700 transition-colors"
+              class="flex items-center px-3 py-2 border rounded text-teal-200 border-teal-400 hover:text-black hover:border-blue-500"
+              onClick={() => showMenu()}
             >
-              Log In
+              <svg
+                class="fill-current h-3 w-3"
+                viewBox="0 0 20 20"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <title>Menu</title>
+                <path d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z" />
+              </svg>
             </button>
           </div>
-          <div className="px-2">
-            {" "}
-            <button
-              onClick={() => history.push("/")}
-              type="submit"
-              className="justify-center bg-blue-500 text-white font-bold px-5 py-2 rounded focus:outline-none shadow hover:bg-blue-700 transition-colors"
-            >
-              Home
-            </button>
+          <div class="w-full hidden lg:flex lg:items-center lg:w-auto">
+            <div class="text-sm lg:flex-grow">
+              <a
+                href="#responsive-header"
+                class="block mt-4 lg:inline-block lg:mt-0 text-teal-200 hover:text-white mr-4"
+              >
+                Sign In
+              </a>
+            </div>
+            <div className="px-2">
+              {" "}
+              <button
+                onClick={() => history.push("/register")}
+                type="submit"
+                className="bg-blue-500 text-white font-bold px-5 py-2 rounded focus:outline-none shadow hover:bg-blue-700 transition-colors"
+              >
+                Get Started
+              </button>
+            </div>
           </div>
-          <div className="px-2">
-            {" "}
-            <button
-              onClick={() => logOut()}
-              type="submit"
-              className="justify-center bg-blue-500 text-white font-bold px-5 py-2 rounded focus:outline-none shadow hover:bg-blue-700 transition-colors"
-            >
-              Logout
-            </button>
-          </div>
-        </div>
+        </nav>
       );
     case true:
       return (
@@ -94,7 +101,7 @@ function Header({ auth }) {
       );
     default:
       return (
-        <div className="flex flex-row justify-center sticky">
+        <div className="flex flex-row sticky">
           <div className="px-2">
             {" "}
             <button

@@ -1,18 +1,6 @@
-import React, { useState, useEffect } from "react";
-import { connect, useDispatch } from "react-redux";
-import { authError } from "../actions";
+import React from "react";
+import { connect } from "react-redux";
 function ErrorAlert({ msg }) {
-  const [show, setShow] = useState(true);
-  const dispatch = useDispatch();
-  console.log("paaaps");
-
-  useEffect(() => {
-    setShow(false);
-    // setTimeout(() => {
-    //   dispatch(authError());
-    // }, 10000);
-  }, []);
-
   return (
     <div className="">
       <div

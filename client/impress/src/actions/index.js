@@ -3,9 +3,7 @@ import axios from "axios";
 import { AUTH_RESET, USER_REGISTER } from "./types";
 import { USER_LOGIN } from "./types";
 import { USER_PROFILE } from "./types";
-import { USER_LOGOUT } from "./types";
 import { LOGIN_ERROR } from "./types";
-import { CURRENT_USER } from "./types";
 import history from "../util/history";
 
 export const userRegister = (data) => async (dispatch) => {
@@ -13,6 +11,10 @@ export const userRegister = (data) => async (dispatch) => {
     `${process.env.REACT_APP_LOCAL_SERVER}signup`,
     data
   );
+  // const { token } = res.data;
+
+  // dispatch({ type: USER_REGISTER, payload: res.data });
+  history.push("/");
   dispatch({ type: USER_REGISTER, payload: res.data });
 };
 
@@ -39,19 +41,18 @@ export const userProfile = (data) => async (dispatch) => {
   const res = await axios.get(
     `${process.env.REACT_APP_LOCAL_SERVER}user/profile?secret_token=${data}`
   );
+  console.log(res.data);
   const { user } = res.data;
   dispatch({ type: USER_PROFILE, payload: user });
 };
 
 export const userLogOut = () => async (dispatch) => {
-  const res = await axios.get(
-    `${process.env.REACT_APP_LOCAL_SERVER}api/logout`
-  );
+  await axios.get(`${process.env.REACT_APP_LOCAL_SERVER}api/logout`);
   history.push("/");
   dispatch({ type: AUTH_RESET });
 };
 
 export const authError = () => (dispatch) => {
   console.log("error");
-  dispatch({ type: AUTH_RESET, payload: [] });
+  dispatch({ type: AUTH_RESET });
 };

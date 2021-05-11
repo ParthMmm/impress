@@ -3,6 +3,10 @@ module.exports = {
   darkMode: "media", // or 'media' or 'class'
   theme: {
     extend: {
+      outline: {
+        black: "2px solid #000000",
+        blue: "2px solid #000000",
+      },
       keyframes: {
         "fade-in-down": {
           "0%": {

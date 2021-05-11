@@ -1,19 +1,34 @@
 import React, { useEffect } from "react";
 import { connect, useDispatch } from "react-redux";
 import { userProfile } from "../actions";
+import history from "../util/history";
 
-function Profile({ secretToken, email, authorized }) {
+function Profile({ secretToken, username, authorized }) {
   console.log(secretToken);
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(userProfile(secretToken));
-  }, []);
+  });
 
   switch (authorized) {
     case undefined:
       return (
-        <div>
-          <h1 className="text-red-700">log in</h1>
+        <div className="bg-white dark:bg-gray-800 font-sans min-h-screen antialiased pt-24 pb-5">
+          <div className="flex flex-col justify-center sm:w-96 sm:m-auto mx-5 mb-5 space-y-8 ">
+            <div className="flex flex-col bg-white p-10 rounded-lg shadow space-y-6">
+              <h1 className="font-bold text-xl text-center">
+                Authentication Error
+              </h1>
+              <h2 className="font-bold text-l text-center">Please Login</h2>
+              <button
+                onClick={() => history.push("/login")}
+                type="submit"
+                className="bg-blue-500 text-white font-bold px-5 py-2 rounded focus:outline-none shadow hover:bg-blue-700 transition-colors"
+              >
+                Log In
+              </button>
+            </div>
+          </div>
         </div>
       );
     case false:
@@ -27,26 +42,26 @@ function Profile({ secretToken, email, authorized }) {
         <div className="bg-white dark:bg-gray-800 font-sans min-h-screen antialiased pt-24 pb-5">
           <div className="flex flex-col justify-center sm:w-96 sm:m-auto mx-5 mb-5 space-y-8 bg-white">
             <img
-              class="w-full"
+              className="w-full"
               src="https://tailwindcss.com/img/card-top.jpg"
               alt="Sunset in the mountains"
             />
-            <div class="px-6 py-4">
-              <div class="font-bold text-xl mb-2">{email}</div>
-              <p class="text-grey-darker text-base">
+            <div className="px-6 py-4">
+              <div className="font-bold text-xl mb-2">{username}</div>
+              <p className="text-grey-darker text-base">
                 Lorem ipsum dolor sit amet, consectetur adipisicing elit.
                 Voluptatibus quia, nulla! Maiores et perferendis eaque,
                 exercitationem praesentium nihil.
               </p>
             </div>
-            <div class="px-6 py-4">
-              <span class="inline-block bg-grey-lighter rounded-full px-3 py-1 text-sm font-semibold text-grey-darker mr-2">
+            <div className="px-6 py-4">
+              <span className="inline-block bg-grey-lighter rounded-full px-3 py-1 text-sm font-semibold text-grey-darker mr-2">
                 #photography
               </span>
-              <span class="inline-block bg-grey-lighter rounded-full px-3 py-1 text-sm font-semibold text-grey-darker mr-2">
+              <span className="inline-block bg-grey-lighter rounded-full px-3 py-1 text-sm font-semibold text-grey-darker mr-2">
                 #travel
               </span>
-              <span class="inline-block bg-grey-lighter rounded-full px-3 py-1 text-sm font-semibold text-grey-darker">
+              <span className="inline-block bg-grey-lighter rounded-full px-3 py-1 text-sm font-semibold text-grey-darker">
                 #winter
               </span>
             </div>
@@ -59,7 +74,7 @@ function Profile({ secretToken, email, authorized }) {
 function mapStateToProps({ auth, user }) {
   return {
     secretToken: auth.token,
-    email: user.email,
+    username: user.username,
     authorized: auth.authorized,
   };
 }

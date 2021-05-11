@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter, Route, Router } from "react-router-dom";
+import { Route, Router } from "react-router-dom";
 import history from "../util/history";
 import Header from "./Header";
 import Landing from "./Landing";
