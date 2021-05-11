@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { connect, useDispatch } from "react-redux";
 import { userProfile } from "../actions";
 import history from "../util/history";
+import { userLogOut } from "../actions";
 
 function Profile({ secretToken, username, authorized }) {
   console.log(secretToken);
@@ -9,6 +10,10 @@ function Profile({ secretToken, username, authorized }) {
   useEffect(() => {
     dispatch(userProfile(secretToken));
   });
+  const logOut = () => {
+    console.log("aaaaaasdf");
+    dispatch(userLogOut());
+  };
 
   switch (authorized) {
     case undefined:
@@ -64,6 +69,16 @@ function Profile({ secretToken, username, authorized }) {
               <span className="inline-block bg-grey-lighter rounded-full px-3 py-1 text-sm font-semibold text-grey-darker">
                 #winter
               </span>
+            </div>
+            <div className="flex flex-row-reverse pr-4 pb-2">
+              {" "}
+              <button
+                onClick={() => logOut()}
+                type="submit"
+                className="bg-blue-500 text-white px-5 py-2 rounded focus:outline-none shadow hover:bg-blue-700 transition-colors"
+              >
+                Logout
+              </button>
             </div>
           </div>
         </div>
