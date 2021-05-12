@@ -44,10 +44,10 @@ function Profile({ secretToken, username, authorized }) {
       );
     default:
       return (
-        <div className="bg-white dark:bg-gray-800 font-sans min-h-screen antialiased pt-24 pb-5">
-          <div className="flex flex-col justify-center sm:w-96 sm:m-auto mx-5 mb-5 space-y-8 bg-white">
+        <div className="bg-white dark:bg-gray-800 font-sans min-h-screen  pt-24 pb-5">
+          <div className="flex flex-col justify-center  rounded-2xl sm:w-96 sm:m-auto mx-5 mb-5 space-y-8 bg-white">
             <img
-              className="w-full"
+              className="w-full rounded-t-2xl shadow-mg "
               src="https://tailwindcss.com/img/card-top.jpg"
               alt="Sunset in the mountains"
             />

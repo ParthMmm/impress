@@ -3,11 +3,10 @@ import React, { Component } from "react";
 export class Create extends Component {
   render() {
     return (
-      <div className="rounded bg-white shadow max-w-md mx-auto">
-        <p className=" group-hover:text-gray-900 ...">New Project</p>
-        <p className=" group-hover:text-gray-500 ...">
-          Create a new project from a variety of starting templates.
-        </p>
+      <div>
+        <div className="bg-white dark:bg-gray-800 font-sans min-h-screen antialiased pt-24 pb-5">
+          <div className="flex flex-col justify-center sm:w-96 sm:m-auto mx-5 mb-5 space-y-8"></div>
+        </div>
       </div>
     );
   }
