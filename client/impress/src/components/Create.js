@@ -1,8 +1,11 @@
 import React from "react";
 import { useForm } from "react-hook-form";
 import { connect, useDispatch } from "react-redux";
-
+import axios from "axios";
+import { submitPost } from "../actions/";
 function Create() {
+  const [file, setFile] = React.useState(null);
+
   const {
     register,
     handleSubmit,
@@ -12,11 +15,21 @@ function Create() {
 
   const dispatch = useDispatch();
   const onSubmit = (data) => {
-    // dispatch(userLogin(data));
-    reset();
+    // const formData = new FormData(data);
+    console.log(data.picture[0]);
+    // formData.append("pifif", file);
+
+    // console.log(formData);
+    dispatch(submitPost(data));
 
     console.log(data);
+    reset();
   };
+
+  const fileHandler = (e) => {
+    setFile(e.target.files[0]);
+  };
+
   return (
     <div>
       <div className="bg-white dark:bg-gray-800 font-sans min-h-screen antialiased pt-24 pb-5">
@@ -33,15 +46,15 @@ function Create() {
                   class=" placeholder-gray-500 border border-transparent rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent p-2"
                 ></input>
               </div>
-              <div className="flex flex-col  pb-2">
-                <input
+              <div className="flex flex-col flex-grow  pb-2">
+                <textarea
                   {...register("description", { required: true })}
                   type="text"
                   name="description"
                   id="description"
                   placeholder="Description"
                   class="placeholder-gray-500 border border-transparent rounded-md  focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent p-2 "
-                ></input>
+                ></textarea>
               </div>
               <div className="flex flex-col items-center pb-2 ">
                 <select
@@ -50,8 +63,8 @@ function Create() {
                   id="switchType"
                   class=" w-full  border border-transparent rounded-md  focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent p-1 "
                 >
-                  <option className="text-red-500" value="" disabled selected>
-                    ppppp
+                  <option value="" disabled selected>
+                    Switch Type
                   </option>
                   <option>Linear</option>
                   <option>Tactile</option>
@@ -65,7 +78,7 @@ function Create() {
                       clipRule="evenodd"
                       fillRule="evenodd"
                     ></path>
-                  </svg>
+                  </svg>i
                 </div> */}
               </div>
               <div className="relative inline-block w-full  items-center  pb-2">
@@ -102,25 +115,41 @@ function Create() {
               </div>
 
               <div className="flex flex-col  ">
-                <label class="w-full flex flex-col items-center px-4 py-6 bg-white text-blue rounded-lg shadow-lg tracking-wide uppercase border border-blue cursor-pointer hover:bg-blue hover:text-blue-500">
+                <label class="w-full flex flex-col items-center px-4 py-6 bg-white text-blue pt-2 rounded-lg shadow-md tracking-wide uppercase border border-blue cursor-pointer hover:bg-blue hover:text-blue-500">
                   <svg
-                    class="w-8 h-8"
-                    fill="currentColor"
                     xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 20 20"
+                    className="h-6 w-6"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
                   >
-                    <path d="M16.88 9.1A4 4 0 0 1 16 17H5a5 5 0 0 1-1-9.9V7a3 3 0 0 1 4.52-2.59A4.98 4.98 0 0 1 17 8c0 .38-.04.74-.12 1.1zM11 11h3l-4-4-4 4h3v3h2v-3z" />
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"
+                    />
                   </svg>
-                  <span class="mt-2 text-base leading-normal">
-                    Select a file
-                  </span>
-                  <input type="file" class="hidden" />
+                  <span class="mt-2 leading-normal">Select a file</span>
+                  <input
+                    {...register("picture", { required: true })}
+                    type="file"
+                    name="picture"
+                    id="picture"
+                    class="hidden"
+                    onChange={fileHandler}
+                  />
+                  <img
+                    className="pt-5"
+                    src={file ? URL.createObjectURL(file) : null}
+                    alt={file ? file.name : null}
+                  ></img>
                 </label>
               </div>
-              <div className="flex flex-col  ">
+              <div className="flex flex-col pt-5 ">
                 <button
                   type="submit"
-                  className="bg-blue-500 text-black font-bold px-5 py-2 rounded focus:outline-none shadow hover:bg-blue-700 transition-colors"
+                  className="bg-blue-500 text-white font-bold px-5 py-2 rounded-lg shadow-md focus:outline-none shadow hover:bg-blue-700 transition-colors"
                 >
                   Submit
                 </button>

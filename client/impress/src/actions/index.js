@@ -56,3 +56,14 @@ export const authError = () => (dispatch) => {
   console.log("error");
   dispatch({ type: AUTH_RESET });
 };
+
+export const submitPost = (data) => async (dispatch) => {
+  console.log("dd");
+  const res = await axios.post(
+    `${process.env.REACT_APP_LOCAL_SERVER}create_post`,
+    data
+  );
+  console.log(res);
+
+  // dispatch({ type: USER_PROFILE, payload: user });
+};
