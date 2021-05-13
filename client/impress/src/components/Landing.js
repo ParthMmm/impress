@@ -6,14 +6,14 @@ import Create from "./Create";
 export default class Landing extends Component {
   render() {
     return (
-      <div className="flex flex-row justify-center ">
+      <div className="flex flex-row justify-center my-16 pt-1 ">
         <div className="h-screen flex ">
           {/* <div className="hidden md:flex pt-5 pr-5 flex-col flex-auto sticky top-0 h-screen">
             <div className="bg-white  h-10 w-10">
               <h1>poggers</h1>
             </div>
           </div> */}
-          <div className="flex-auto flex pt-20 ">
+          <div className="flex-auto flex ">
             <div className="flex-auto overflow-y-scroll">
               <Card />
               <Card />

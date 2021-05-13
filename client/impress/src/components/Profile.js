@@ -47,7 +47,7 @@ function Profile({ secretToken, username, authorized }) {
         <div className="bg-white dark:bg-gray-800 font-sans min-h-screen  pt-24 pb-5">
           <div className="flex flex-col justify-center  rounded-2xl sm:w-96 sm:m-auto mx-5 mb-5 space-y-8 bg-white">
             <img
-              className="w-full rounded-t-2xl shadow-mg "
+              className="w-full rounded-t-2xl shadow-md "
               src="https://tailwindcss.com/img/card-top.jpg"
               alt="Sunset in the mountains"
             />
