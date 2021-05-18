@@ -14,21 +14,11 @@ export default class Landing extends Component {
             </div>
           </div> */}
           <div className="flex-auto flex ">
-            <div className="flex-auto overflow-y-scroll">
-              <Card />
-              <Card />
-              <Card />
-              <Card />
-              <Card />
-              <Card />
-              <Card />
-              <Card />
+            <div className="flex-auto overflow-y-scroll ">
               <Card />
             </div>
           </div>
-          <div className="hidden pt-5 pl-5 flex-col flex-auto sticky top-0 h-screen md:flex">
-            <Create />
-          </div>
+          <div className="hidden pt-5 pl-5 flex-col flex-auto sticky top-0 h-screen md:flex"></div>
           <div className="hidden pt-5 pl-5 flex-col flex-auto sticky top-0 h-screen md:flex"></div>
         </div>
       </div>

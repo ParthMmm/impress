@@ -1,29 +1,45 @@
-import React from "react";
-import { useForm } from "react-hook-form";
+import React, { useRef, useState } from "react";
+import { useForm, useFieldArray } from "react-hook-form";
 import { connect, useDispatch } from "react-redux";
 import axios from "axios";
 import { submitPost } from "../actions/";
-function Create() {
-  const [file, setFile] = React.useState(null);
+function Create({ id, username, token }) {
+  const [file, setFile] = useState(null);
+  const form = useRef(null);
 
   const {
     register,
     handleSubmit,
     formState: { errors },
     reset,
+    setValue,
   } = useForm();
 
   const dispatch = useDispatch();
-  const onSubmit = (data) => {
-    // const formData = new FormData(data);
-    console.log(data.picture[0]);
-    // formData.append("pifif", file);
+  const onSubmit = async (data) => {
+    let formData = new FormData();
 
-    // console.log(formData);
-    dispatch(submitPost(data));
+    formData.append("file", file);
+    // console.log(data);
 
-    console.log(data);
-    reset();
+    // console.log(file);
+    // dispatch(submitPost(formData));
+    const res = await axios.post(
+      `${process.env.REACT_APP_LOCAL_SERVER}user/upload_image?secret_token=${token}`,
+      formData
+    );
+    const { url } = res.data;
+    console.log(url);
+    data.picture = url;
+    data.userID = id;
+    data.username = username;
+    const res2 = await axios.post(
+      `${process.env.REACT_APP_LOCAL_SERVER}user/create_post?secret_token=${token}`,
+      data
+    );
+    console.log(res2.data);
+
+    // reset();
   };
 
   const fileHandler = (e) => {
@@ -113,7 +129,6 @@ function Create() {
                   <option>Kebo</option>
                 </select>
               </div>
-
               <div className="flex flex-col  ">
                 <label class="w-full flex flex-col items-center px-4 py-6 bg-white text-blue pt-2 rounded-lg shadow-md tracking-wide uppercase border border-blue cursor-pointer hover:bg-blue hover:text-blue-500">
                   <svg
@@ -146,8 +161,11 @@ function Create() {
                   ></img>
                 </label>
               </div>
+
               <div className="flex flex-col pt-5 ">
                 <button
+                  {...register("userID")}
+                  {...register("username")}
                   type="submit"
                   className="bg-blue-500 text-white font-bold px-5 py-2 rounded-lg shadow-md focus:outline-none shadow hover:bg-blue-700 transition-colors"
                 >
@@ -161,7 +179,14 @@ function Create() {
     </div>
   );
 }
+function mapStateToProps({ user, auth }) {
+  return {
+    id: user._id,
+    username: user.username,
+    token: auth.token,
+  };
+}
 
-export default Create;
+export default connect(mapStateToProps)(Create);
 
 // class="w-full h-10 pl-3 pr-6 text-base placeholder-gray-600 border rounded-lg appearance-none focus:shadow-outline"

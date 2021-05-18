@@ -4,7 +4,9 @@ import { AUTH_RESET, USER_REGISTER } from "./types";
 import { USER_LOGIN } from "./types";
 import { USER_PROFILE } from "./types";
 import { LOGIN_ERROR } from "./types";
+import { FETCH_POSTS } from "./types";
 import history from "../util/history";
+import { serialize } from "object-to-formdata";
 
 export const userRegister = (data) => async (dispatch) => {
   const res = await axios.post(
@@ -58,12 +60,32 @@ export const authError = () => (dispatch) => {
 };
 
 export const submitPost = (data) => async (dispatch) => {
-  console.log("dd");
-  const res = await axios.post(
-    `${process.env.REACT_APP_LOCAL_SERVER}create_post`,
+  console.log(data);
+  // const res = await axios.post(
+  //   "https://api.cloudinary.com/v1_1/dnswq1qos/upload",
+  //   data.picture,
+  //   {
+  //     upload_preset: "bkbn5m1r",
+  //   },
+  //   { headers: { "Content-Type": null } }
+  // );
+  // console.log(res.data);
+  const res1 = await axios.post(
+    `${process.env.REACT_APP_LOCAL_SERVER}user/create_post?secret_token=${data}`,
     data
   );
-  console.log(res);
+  // axios.post(`${process.env.REACT_APP_LOCAL_SERVER}create_post`, formData, {
+  //   headers: { "Content-type": "application/x-www-form-urlencoded" },
+  // });
+
+  console.log(res1.data);
 
   // dispatch({ type: USER_PROFILE, payload: user });
+};
+
+export const fetchPosts = (data) => async (dispatch) => {
+  const res = await axios.get(
+    `${process.env.REACT_APP_LOCAL_SERVER}user/posts?secret_token=${data}`
+  );
+  dispatch({ type: FETCH_POSTS, payload: res.data });
 };
