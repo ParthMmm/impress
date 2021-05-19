@@ -6,7 +6,6 @@ import "./index.css";
 import { Provider } from "react-redux";
 import { PersistGate } from "redux-persist/integration/react";
 import { store, persist } from "./util/store";
-import "alpinejs";
 
 ReactDOM.render(
   <Provider store={store}>

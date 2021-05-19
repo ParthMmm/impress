@@ -5,8 +5,8 @@ import { USER_LOGIN } from "./types";
 import { USER_PROFILE } from "./types";
 import { LOGIN_ERROR } from "./types";
 import { FETCH_POSTS } from "./types";
+import { FETCH_ACCESSORIES } from "./types";
 import history from "../util/history";
-import { serialize } from "object-to-formdata";
 
 export const userRegister = (data) => async (dispatch) => {
   const res = await axios.post(
@@ -87,5 +87,17 @@ export const fetchPosts = (data) => async (dispatch) => {
   const res = await axios.get(
     `${process.env.REACT_APP_LOCAL_SERVER}user/posts?secret_token=${data}`
   );
+
   dispatch({ type: FETCH_POSTS, payload: res.data });
+};
+
+export const fetchAccessories = () => async (dispatch) => {
+  const res = await axios.get(
+    `${process.env.REACT_APP_LOCAL_SERVER}accessories`
+  );
+
+  dispatch({ type: FETCH_ACCESSORIES, payload: res.data });
+
+  // let { films } = res1.data;
+  // dispatch({ type: FETCH_FILMS, payload: films });
 };

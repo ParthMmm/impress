@@ -1,8 +1,7 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
 function ErrorAlert({ msg }) {
   const [showError, setShowError] = useState(true);
-  const reff = useRef(true);
   useEffect(() => {
     // Update the document title using the browser API
     setShowError(true);

@@ -48,12 +48,17 @@ module.exports = {
             transform: "translateY(10px)",
           },
         },
+        wiggle: {
+          "0%, 100%": { transform: "rotate(-3deg)" },
+          "50%": { transform: "rotate(3deg)" },
+        },
       },
       animation: {
         "fade-in-down": "fade-in-down 0.5s ease-out",
         "fade-out-down": "fade-out-down 0.5s ease-out",
         "fade-in-up": "fade-in-up 0.5s ease-out",
         "fade-out-up": "fade-out-up 0.5s ease-out",
+        wiggle: "wiggle 200ms ease-in-out",
       },
     },
   },

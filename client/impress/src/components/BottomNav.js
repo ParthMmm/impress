@@ -6,8 +6,8 @@ function BottomNav() {
     history.push(location);
   };
   return (
-    <div class=" lg:hidden">
-      <nav class=" dark:bg-gray-800 bg-teal-500 pl-6 pr-6 pt-4 pb-4 fixed w-full h-50 z-10 bottom-0">
+    <div className=" lg:hidden">
+      <nav className=" dark:bg-gray-800 bg-teal-500 pl-6 pr-6 pt-4 pb-4 fixed w-full h-50 z-10 bottom-0">
         <div className="flex items-center justify-between text-white">
           <button onClick={() => menuItemClick("/")}>
             <svg
