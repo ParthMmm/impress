@@ -18,14 +18,14 @@ function Header({ auth }) {
       return (
         <div>
           <nav className=" dark:bg-gray-800 items-center pl-6 pr-6 pt-4 pb-4 fixed w-full z-10 top-0">
-            <div className="flex flex-row justify-between items-center">
+            <div className="flex flex-row justify-between items-center ">
               <span
                 className="text-blue-500 font-semibold  text-2xl tracking-tight cursor-pointer antialiased"
                 onClick={() => history.push("/")}
               >
                 Im
                 <span
-                  className="text-black font-semibold  text-2xl tracking-tight hover:text-blue-500  dark:text-white cursor-pointer antialiased"
+                  className="text-black font-semibold  text-2xl tracking-tight hover:text-blue-500  dark:text-white cursor-pointer antialiased transition-colors"
                   onClick={() => history.push("/")}
                 >
                   press
@@ -47,7 +47,7 @@ function Header({ auth }) {
                   <button
                     onClick={() => history.push("/profile")}
                     type="submit"
-                    className="text-black hover:text-blue-500 dark:text-white focus:outline-none"
+                    className="text-black hover:text-blue-500 dark:text-white focus:outline-none transition-colors"
                   >
                     Profile
                   </button>

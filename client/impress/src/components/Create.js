@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { connect, useDispatch } from "react-redux";
-import { fetchAccessories } from "../actions";
+import { fetchAccessories, userProfile } from "../actions";
 import axios from "axios";
 import history from "../util/history";
 function Create({ id, username, token, lubes, films }) {
@@ -10,6 +10,7 @@ function Create({ id, username, token, lubes, films }) {
 
   useEffect(() => {
     dispatch(fetchAccessories());
+    dispatch(userProfile(token));
   }, []);
 
   const {
@@ -128,10 +129,8 @@ function Create({ id, username, token, lubes, films }) {
                     Lube
                   </option>
                   <React.Fragment>{lItems}</React.Fragment>
-                  {/* <option>Krytox 205 G0</option>
-                  <option>Krytox GPL 105</option>
-                  <option>Tribosys 3203</option>
-                  <option>Tribosys 3204</option> */}
+                  <option>Other</option>
+                  <option>None</option>
                 </select>
                 <span className="text-red-700">
                   {" "}
@@ -148,6 +147,8 @@ function Create({ id, username, token, lubes, films }) {
                     Switch Film
                   </option>
                   <React.Fragment>{fItems}</React.Fragment>
+                  <option>Other</option>
+                  <option>None</option>
                 </select>
                 <span className="text-red-700">
                   {" "}

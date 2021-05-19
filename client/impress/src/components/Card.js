@@ -13,19 +13,25 @@ function Card({ posts, token }) {
 
   const allPosts = posts.reverse().map((post) => (
     <div className="pb-5" key={post._id}>
-      <div className="rounded bg-white shadow lg:max-w-2xl  max-w-wd mx-auto">
-        <header className="p-4">
+      <div className="rounded-xl bg-white shadow-2xl lg:max-w-2xl  max-w-wd mx-auto object-fill border border-gray-300 items-center">
+        <header className="p-4 ">
           <img
-            className="w-10 h-10 m-1 mr-3 float-left rounded-full"
+            className="w-10 h-10 m-1 mr-3 float-left rounded-full "
             src="https://img.icons8.com/material-rounded/96/000000/user-male-circle.png"
             alt="img"
           />
           <h3 className="text-lg font-bold">{post.title}</h3>
           <p className="text-sm text-gray-600">{post.username}</p>
-          <p className="text-sm text-gray-600 float-right">{post.datePosted}</p>
+          <p className="text-sm text-gray-400 float-right">{post.datePosted}</p>
         </header>
-        <section className="object-scale-down">
-          <img src={post.picture} alt="img" />
+        <div className="	">
+          <section className="">
+            {" "}
+            <img className="mx-auto " src={post.picture} alt="img" />
+          </section>
+        </div>
+        <section>
+          {/* <img className="object-fill" src={post.picture} alt="img" /> */}
           <section className="flex flex-row">
             <p className="text-sm text-gray-500 p-4">{post.switchType}</p>
             <p className="text-sm text-gray-500 p-4">Lube: {post.lube}</p>
@@ -36,11 +42,9 @@ function Card({ posts, token }) {
 
         <footer className="p-4">
           <button className="uppercase font-bold text-sm text-blue-700 hover:underline mr-3">
-            Book Online
+            Share
           </button>
-          <button className="uppercase font-bold text-sm text-blue-700 hover:underline">
-            More Info
-          </button>
+
           <button
             className="float-right"
             onClick={() => setEffect(false)}

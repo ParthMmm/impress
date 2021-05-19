@@ -1,6 +1,6 @@
 import axios from "axios";
 
-import { AUTH_RESET, USER_REGISTER } from "./types";
+import { AUTH_RESET, USER_LOGOUT, USER_REGISTER } from "./types";
 import { USER_LOGIN } from "./types";
 import { USER_PROFILE } from "./types";
 import { LOGIN_ERROR } from "./types";
@@ -57,6 +57,12 @@ export const userLogOut = () => async (dispatch) => {
 export const authError = () => (dispatch) => {
   console.log("error");
   dispatch({ type: AUTH_RESET });
+};
+
+export const logOut = () => async (dispatch) => {
+  await axios.get(`${process.env.REACT_APP_LOCAL_SERVER}api/logout`);
+
+  dispatch({ type: USER_LOGOUT });
 };
 
 export const submitPost = (data) => async (dispatch) => {
