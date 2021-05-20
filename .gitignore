@@ -156,3 +156,8 @@ sketch
 impress_s/
 server/config/dev.js
 .dockerignore
+deployment.yaml
+docker-compose.yaml
+service.yaml
+server/Dockerfile.worker
+client/impress/Dockerfile
