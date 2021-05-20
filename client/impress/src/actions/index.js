@@ -2,6 +2,7 @@ import axios from "axios";
 
 import {
   AUTH_RESET,
+  DISLIKE_POST,
   FETCH_LIKES,
   LIKE_POST,
   USER_LOGOUT,
@@ -114,12 +115,24 @@ export const fetchAccessories = () => async (dispatch) => {
   // dispatch({ type: FETCH_FILMS, payload: films });
 };
 
-export const likePost = (data) => async (dispatch) => {
+export const likePost = (token, id) => async (dispatch) => {
   const res = await axios.post(
-    `${process.env.REACT_APP_LOCAL_SERVER}user/like_posts?secret_token=${data}`
+    `${process.env.REACT_APP_LOCAL_SERVER}user/like_post?secret_token=${token}`,
+    id
   );
+  console.log(res);
 
-  dispatch({ type: LIKE_POST, payload: res.data });
+  // dispatch({ type: LIKE_POST, payload: res.data });
+};
+
+export const dislikePost = (token, id) => async (dispatch) => {
+  const res = await axios.post(
+    `${process.env.REACT_APP_LOCAL_SERVER}user/dislike_post?secret_token=${token}`,
+    id
+  );
+  console.log(res);
+
+  // dispatch({ type: DISLIKE_POST, payload: res.data });
 };
 
 export const fetchLikes = (data) => async (dispatch) => {

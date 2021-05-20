@@ -31,13 +31,13 @@ function Header({ auth }) {
                   press
                 </span>
               </span>
-              <div className="w-full hidden lg:flex lg:flex-row-reverse  items-center lg:w-auto antialiased h-0">
+              <div className="w-full hidden lg:flex lg:flex-row-reverse  items-center lg:w-auto antialiased h-0 ">
                 <div className="pr-4">
                   {" "}
                   <button
                     onClick={() => history.push("/create")}
                     type="submit"
-                    className="bg-blue-500 text-white px-4 py-2 rounded-md shadow-2xl focus:outline-none hover:bg-blue-700 transition-colors"
+                    className="bg-blue-500 text-white px-4 py-2 font-semibold	 rounded-md shadow-2xl focus:outline-none hover:bg-blue-700 transition-colors"
                   >
                     Create Post
                   </button>

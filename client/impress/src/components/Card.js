@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { fetchPosts, fetchLikes } from "../actions/";
+import { fetchPosts, fetchLikes, dislikePost, likePost } from "../actions/";
 import { connect, useDispatch } from "react-redux";
 
 function Card({ posts, token }) {
@@ -16,9 +16,19 @@ function Card({ posts, token }) {
     dispatch(fetchLikes(token));
   };
 
+  const dislike = (id) => {
+    console.log("front end dislike");
+    dispatch(dislikePost(token, id));
+  };
+  const like = (id) => {
+    console.log("front end like");
+
+    dispatch(likePost(token, id));
+  };
+
   const allPosts = posts.reverse().map((post) => (
     <div className="pb-5" key={post._id}>
-      <div className="rounded-xl bg-white shadow-2xl lg:max-w-2xl  max-w-wd mx-auto object-fill border border-gray-300 items-center">
+      <div className="rounded-xl bg-white shadow-xl lg:max-w-2xl  max-w-wd mx-auto object-fill border border-gray-300 items-center">
         <header className="p-4 ">
           <img
             className="w-10 h-10 m-1 mr-3 float-left rounded-full "
@@ -51,9 +61,9 @@ function Card({ posts, token }) {
           </button>
 
           <button
+            onClick={() => dislike(`${post._id}`)}
             className="float-right"
-            onClick={() => setEffect(false)}
-            onAnimationEnd={() => setEffect(false)}
+            id="dislike"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -72,9 +82,9 @@ function Card({ posts, token }) {
           </button>
 
           <button
-            className={`${effect && "animate-wiggle"} float-right mr-3`}
-            onClick={() => setEffect(false)}
-            onAnimationEnd={() => setEffect(false)}
+            onClick={() => like(`${post._id}`)}
+            className="float-right"
+            id="like"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
