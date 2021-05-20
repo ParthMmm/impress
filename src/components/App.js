@@ -13,7 +13,7 @@ function App() {
   return (
     <div>
       <Router history={history}>
-        <div className="">
+        <div className="bg-white dark:bg-gray-800">
           <Header />
           <Route exact path="/" component={Landing} />
           <Route exact path="/register" component={Register} />
