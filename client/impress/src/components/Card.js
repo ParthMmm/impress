@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { fetchPosts } from "../actions/";
+import { fetchPosts, fetchLikes } from "../actions/";
 import { connect, useDispatch } from "react-redux";
 
 function Card({ posts, token }) {
@@ -8,8 +8,13 @@ function Card({ posts, token }) {
 
   useEffect(() => {
     dispatch(fetchPosts(token));
-    // eslint-disable-line react-hooks/exhaustive-deps
+
+    fetchPostsAndLikes(token);
   }, []);
+  const fetchPostsAndLikes = (token) => {
+    dispatch(fetchPosts(token));
+    dispatch(fetchLikes(token));
+  };
 
   const allPosts = posts.reverse().map((post) => (
     <div className="pb-5" key={post._id}>

@@ -1,6 +1,12 @@
 import axios from "axios";
 
-import { AUTH_RESET, USER_LOGOUT, USER_REGISTER } from "./types";
+import {
+  AUTH_RESET,
+  FETCH_LIKES,
+  LIKE_POST,
+  USER_LOGOUT,
+  USER_REGISTER,
+} from "./types";
 import { USER_LOGIN } from "./types";
 import { USER_PROFILE } from "./types";
 import { LOGIN_ERROR } from "./types";
@@ -106,4 +112,20 @@ export const fetchAccessories = () => async (dispatch) => {
 
   // let { films } = res1.data;
   // dispatch({ type: FETCH_FILMS, payload: films });
+};
+
+export const likePost = (data) => async (dispatch) => {
+  const res = await axios.post(
+    `${process.env.REACT_APP_LOCAL_SERVER}user/like_posts?secret_token=${data}`
+  );
+
+  dispatch({ type: LIKE_POST, payload: res.data });
+};
+
+export const fetchLikes = (data) => async (dispatch) => {
+  const res = await axios.post(
+    `${process.env.REACT_APP_LOCAL_SERVER}user/find_likes?secret_token=${data}`
+  );
+
+  dispatch({ type: FETCH_LIKES, payload: res.data });
 };

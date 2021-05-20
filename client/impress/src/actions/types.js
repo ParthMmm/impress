@@ -7,3 +7,5 @@ export const AUTH_RESET = "auth_reset";
 export const CURRENT_USER = "current_user";
 export const FETCH_POSTS = "fetch_posts";
 export const FETCH_ACCESSORIES = "fetch_lubes";
+export const LIKE_POST = "like_post";
+export const FETCH_LIKES = "fetch_likes";
