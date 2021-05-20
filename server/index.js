@@ -7,16 +7,22 @@ const cors = require("cors");
 const cookieSession = require("cookie-session");
 
 require("./models/User");
+require("./models/Post");
+require("./models/Lube");
+require("./models/Film");
+
 require("./services/passport");
 
 const authRoute = require("./routes/authRoutes");
 const secureRoute = require("./routes/secureRoutes");
-
+const fetchRoute = require("./routes/fetchRoutes");
+const FilmModel = require("./models/Film");
 mongoose.connect(keys.DATABASE_URL, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });
 mongoose.set("useCreateIndex", true);
+mongoose.set("useFindAndModify", false);
 
 mongoose.connection.on("error", (error) => console.log(error));
 
@@ -35,9 +41,10 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(authRoute);
-// app.use(authRoute);
+app.use(fetchRoute);
 
 // Plug in the JWT strategy as a middleware so only verified users can access this route.
+
 app.use("/user", passport.authenticate("jwt", { session: false }), secureRoute);
 
 // Handle errors.
@@ -45,5 +52,6 @@ app.use(function (err, req, res, next) {
   res.status(err.status || 500);
   res.json({ error: err });
 });
+
 const port = process.env.PORT || 8000;
 app.listen(port, () => console.log(`Server running on port ${port}`));

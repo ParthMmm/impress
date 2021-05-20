@@ -85,5 +85,4 @@ passport.use(
     }
   )
 );
-
 module.exports = router;
