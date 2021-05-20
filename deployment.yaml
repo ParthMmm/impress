@@ -1,0 +1,21 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: impress
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: impress
+  template:
+    metadata:
+      labels:
+        app: impress
+    spec:
+      containers:
+        - name: impress
+          image: impress
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 80
+      restartPolicy: Always

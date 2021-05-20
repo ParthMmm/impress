@@ -2,7 +2,6 @@ import React from "react";
 
 import { connect, useDispatch } from "react-redux";
 import history from "../util/history";
-import "alpinejs";
 import { authError } from "../actions";
 
 function Header({ auth }) {

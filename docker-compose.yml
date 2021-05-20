@@ -1,0 +1,19 @@
+version: "3.8"
+
+services:
+  impress:
+    image: impress
+    stdin_open: true
+    ports:
+      - "3000:3000"
+    networks:
+      - "mern-app"
+  impress-backend:
+    image: impress-backend
+    ports:
+      - "8000:8000"
+    networks:
+      - "mern-app"
+networks:
+  mern-app:
+    driver: bridge

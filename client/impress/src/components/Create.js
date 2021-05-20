@@ -7,10 +7,15 @@ import history from "../util/history";
 function Create({ id, username, token, lubes, films }) {
   const dispatch = useDispatch();
   const [file, setFile] = useState(null);
+  let lubeItems = [];
+
+  let filmItems = [];
 
   useEffect(() => {
     dispatch(fetchAccessories());
     dispatch(userProfile(token));
+    lubes.map((lube) => lubeItems.push(lube));
+    films.map((film) => filmItems.push(film));
   }, []);
 
   const {
@@ -50,14 +55,13 @@ function Create({ id, username, token, lubes, films }) {
   const fileHandler = (e) => {
     setFile(e.target.files[0]);
   };
-  let lubeItems = [];
-  lubes.map((lube) => lubeItems.push(lube));
+  // let lubeItems = [];
+  // lubes.map((lube) => lubeItems.push(lube));
   let lItems = lubeItems.sort().map((i) => {
     return <option key={i._id}>{i.name}</option>;
   });
 
-  let filmItems = [];
-  films.map((film) => filmItems.push(film));
+  // films.map((film) => filmItems.push(film));
   let fItems = filmItems.sort().map((i) => {
     return <option key={i._id}>{i.name}</option>;
   });
