@@ -116,23 +116,27 @@ export const fetchAccessories = () => async (dispatch) => {
 };
 
 export const likePost = (token, id) => async (dispatch) => {
-  const res = await axios.post(
-    `${process.env.REACT_APP_LOCAL_SERVER}user/like_post?secret_token=${token}`,
-    id
-  );
-  console.log(res);
+  const objID = { id };
 
-  // dispatch({ type: LIKE_POST, payload: res.data });
+  const res = await axios.post(
+    `${process.env.REACT_APP_LOCAL_SERVER}user/like_post`,
+    objID,
+    { headers: { Authorization: `Bearer ${token}` } }
+  );
+
+  dispatch({ type: FETCH_POSTS, payload: res.data });
 };
 
 export const dislikePost = (token, id) => async (dispatch) => {
-  const res = await axios.post(
-    `${process.env.REACT_APP_LOCAL_SERVER}user/dislike_post?secret_token=${token}`,
-    id
-  );
-  console.log(res);
+  const objID = { id };
 
-  // dispatch({ type: DISLIKE_POST, payload: res.data });
+  const res = await axios.post(
+    `${process.env.REACT_APP_LOCAL_SERVER}user/dislike_post`,
+    objID,
+    { headers: { Authorization: `Bearer ${token}` } }
+  );
+
+  dispatch({ type: FETCH_POSTS, payload: res.data });
 };
 
 export const fetchLikes = (data) => async (dispatch) => {

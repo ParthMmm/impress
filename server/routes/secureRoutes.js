@@ -9,6 +9,7 @@ let now = new Date();
 async function checkReaction(id, userID) {
   let liked = false;
   let disliked = false;
+  console.log(id, userID);
 
   let checkLiked = await PostModel.findById(id, {
     liked_by: { $elemMatch: { userID } },
@@ -16,13 +17,17 @@ async function checkReaction(id, userID) {
   let checkDisliked = await PostModel.findById(id, {
     disliked_by: { $elemMatch: { userID } },
   });
+
   if (checkLiked != null) {
-    if (checkLiked.liked_by != "") {
+    if (checkLiked.liked_by.length != 0) {
+      console.log("liked");
       liked = true;
     }
   }
   if (checkDisliked != null) {
-    if (checkDisliked.disliked_by != "") {
+    if (checkDisliked.disliked_by.length != 0) {
+      console.log("disliked");
+
       disliked = true;
     }
   }
@@ -107,6 +112,7 @@ router.post("/create_post", (req, res, next) => {
 });
 
 router.get("/profile", (req, res, next) => {
+  console.log("ding");
   res.json({
     user: req.user,
   });
@@ -135,19 +141,23 @@ router.post("/find_likes", async (req, res, next) => {
 router.post("/dislike_post", async (req, res, next) => {
   const { id } = req.body;
 
-  let tmp = await checkReaction(id, req.user.id);
+  let tmp = await checkReaction(id, req.user._id);
   let liked = tmp[0];
   let disliked = tmp[1];
+
+  console.log(liked, disliked);
 
   if (liked) {
     PostModel.findByIdAndUpdate(id, {
       $inc: { dislikes: 1, likes: -1 },
-      $push: { disliked_by: { userID: req.user.id } },
-      $pull: { liked_by: { userID: req.user.id } },
+      $push: { disliked_by: { userID: req.user._id } },
+      $pull: { liked_by: { userID: req.user._id } },
     })
-      .then((result) => {
+      .then(async (result) => {
+        const posts = await PostModel.find();
+
         console.log("Removed like, added dislike");
-        res.status(200).send({ msg: "Disliked" });
+        res.status(200).send(posts);
       })
       .catch((error) => {
         console.log(error);
@@ -157,12 +167,15 @@ router.post("/dislike_post", async (req, res, next) => {
     res.status(401).send("Already Disliked");
   } else {
     PostModel.findByIdAndUpdate(id, {
-      $push: { disliked_by: { userID: req.user.id } },
+      $push: { disliked_by: { userID: req.user._id } },
       $inc: { dislikes: 1 },
     })
-      .then((result) => {
+      .then(async (result) => {
+        const posts = await PostModel.find();
+
         console.log("Disliked");
-        res.status(200).send({ msg: "Disliked" });
+        res.status(200).send(posts);
+        console.log("Disliked");
       })
       .catch((error) => {
         console.log(error);
@@ -174,19 +187,23 @@ router.post("/dislike_post", async (req, res, next) => {
 router.post("/like_post", async (req, res, next) => {
   const { id } = req.body;
 
-  let tmp = await checkReaction(id, req.user.id);
+  let tmp = await checkReaction(id, req.user._id);
   let liked = tmp[0];
   let disliked = tmp[1];
+
+  console.log(liked, disliked);
 
   if (disliked) {
     PostModel.findByIdAndUpdate(id, {
       $inc: { dislikes: -1, likes: 1 },
-      $push: { liked_by: { userID: req.user.id } },
-      $pull: { disliked_by: { userID: req.user.id } },
+      $push: { liked_by: { userID: req.user._id } },
+      $pull: { disliked_by: { userID: req.user._id } },
     })
-      .then((result) => {
+      .then(async (result) => {
+        const posts = await PostModel.find();
+
         console.log("Removed dislike, added like");
-        res.status(200).send({ msg: "Liked" });
+        res.status(200).send(posts);
       })
       .catch((error) => {
         console.log(error);
@@ -196,12 +213,14 @@ router.post("/like_post", async (req, res, next) => {
     res.status(401).send("Already Liked");
   } else {
     PostModel.findByIdAndUpdate(id, {
-      $push: { liked_by: { userID: req.user.id } },
       $inc: { likes: 1 },
+      $push: { liked_by: { userID: req.user._id } },
     })
-      .then((result) => {
+      .then(async (result) => {
+        const posts = await PostModel.find();
+
         console.log("Liked");
-        res.status(200).send({ msg: "Liked" });
+        res.status(200).send(posts);
       })
       .catch((error) => {
         console.log(error);
