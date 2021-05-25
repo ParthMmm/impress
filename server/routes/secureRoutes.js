@@ -124,7 +124,7 @@ router.get("/posts", async (req, res, next) => {
   res.send(posts);
 });
 
-router.post("/find_likes", async (req, res, next) => {
+router.get("/find_likes", async (req, res, next) => {
   PostModel.find({
     liked_by: { $elemMatch: { userID: req.user.id } },
   })

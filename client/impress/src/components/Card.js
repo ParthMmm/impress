@@ -1,16 +1,16 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { fetchPosts, fetchLikes, dislikePost, likePost } from "../actions/";
 import { connect, useDispatch } from "react-redux";
 import { LIKE_POST } from "../actions/types";
 
-function Card({ posts, token }) {
+function Card({ posts, token, likedPosts }) {
   const dispatch = useDispatch();
-  const [effect, setEffect] = useState(false);
 
   useEffect(() => {
-    dispatch(fetchPosts(token));
+    // dispatch(fetchPosts(token));
 
     fetchPostsAndLikes(token);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   const fetchPostsAndLikes = (token) => {
     dispatch(fetchPosts(token));
@@ -92,7 +92,7 @@ function Card({ posts, token }) {
 
               <button
                 onClick={() => like(`${post._id}`)}
-                className="inline-flex items-center bg-blue-500 text-white px-4 py-2 font-semibold	 rounded-md shadow-2xl focus:outline-none hover:bg-blue-700 transition-colors"
+                className="inline-flex items-center bg-blue-500 text-white px-4 py-2 font-semibold rounded-md shadow-2xl focus:outline-none hover:bg-blue-700 transition-colors"
                 id="like"
               >
                 <svg
@@ -137,8 +137,8 @@ function Card({ posts, token }) {
   return <div>{allPosts}</div>;
 }
 
-function mapStateToProps({ posts, auth, updatedPost }) {
-  return { posts, token: auth.token, updatedPost };
+function mapStateToProps({ posts, auth, updatedPost, likedPosts }) {
+  return { posts, token: auth.token, updatedPost, likedPosts };
 }
 
 function mapDispatchToProps(dispatch) {

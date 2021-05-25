@@ -4,13 +4,11 @@ import { userProfile } from "../actions";
 import history from "../util/history";
 import { userLogOut, logOut } from "../actions";
 function Profile({ secretToken, username, authorized }) {
-  console.log(secretToken);
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(userProfile(secretToken));
   });
   const doLogOut = () => {
-    console.log("aaaaaasdf");
     dispatch(userLogOut());
     dispatch(logOut());
   };

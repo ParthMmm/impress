@@ -1,21 +1,16 @@
 import React, { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { connect, useDispatch } from "react-redux";
-import { fetchAccessories, userProfile } from "../actions";
+import { fetchAccessories } from "../actions";
 import axios from "axios";
 import history from "../util/history";
 function Create({ id, username, token, lubes, films }) {
   const dispatch = useDispatch();
   const [file, setFile] = useState(null);
-  let lubeItems = [];
-
-  let filmItems = [];
 
   useEffect(() => {
     dispatch(fetchAccessories());
-    dispatch(userProfile(token));
-    lubes.map((lube) => lubeItems.push(lube));
-    films.map((film) => filmItems.push(film));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const {
@@ -30,8 +25,9 @@ function Create({ id, username, token, lubes, films }) {
     formData.append("file", file);
 
     const res = await axios.post(
-      `${process.env.REACT_APP_LOCAL_SERVER}user/upload_image?secret_token=${token}`,
-      formData
+      `${process.env.REACT_APP_LOCAL_SERVER}user/upload_image`,
+      formData,
+      { headers: { Authorization: `Bearer ${token}` } }
     );
 
     const { url } = res.data;
@@ -39,10 +35,13 @@ function Create({ id, username, token, lubes, films }) {
     data.picture = url;
     data.userID = id;
     data.username = username;
+
     const res2 = await axios.post(
-      `${process.env.REACT_APP_LOCAL_SERVER}user/create_post?secret_token=${token}`,
-      data
+      `${process.env.REACT_APP_LOCAL_SERVER}user/create_post`,
+      data,
+      { headers: { Authorization: `Bearer ${token}` } }
     );
+
     console.log(res2.data);
     if (res2.status === 200) {
       console.log("success");
@@ -55,16 +54,18 @@ function Create({ id, username, token, lubes, films }) {
   const fileHandler = (e) => {
     setFile(e.target.files[0]);
   };
-  // let lubeItems = [];
-  // lubes.map((lube) => lubeItems.push(lube));
+  let lubeItems = [];
+  lubes.map((lube) => lubeItems.push(lube));
   let lItems = lubeItems.sort().map((i) => {
     return <option key={i._id}>{i.name}</option>;
   });
 
-  // films.map((film) => filmItems.push(film));
+  let filmItems = [];
+  films.map((film) => filmItems.push(film));
   let fItems = filmItems.sort().map((i) => {
     return <option key={i._id}>{i.name}</option>;
   });
+
   return (
     <div>
       <div className="bg-white dark:bg-gray-800 font-sans min-h-screen antialiased pt-24 pb-5">
@@ -109,9 +110,10 @@ function Create({ id, username, token, lubes, films }) {
                   {...register("switchType", { required: true })}
                   name="switchType"
                   id="switchType"
+                  defaultValue=""
                   className=" w-full  border border-transparent rounded-md  focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent p-1 "
                 >
-                  <option value="" disabled selected>
+                  <option value="" hidden>
                     Switch Type
                   </option>
                   <option>Linear</option>
@@ -132,11 +134,12 @@ function Create({ id, username, token, lubes, films }) {
                   id="lube"
                   className="placeholder-gray-500 w-full  border border-transparent rounded-md  focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent p-1 "
                   placeholder="Lube"
+                  defaultValue=""
                 >
-                  <option value="" disabled selected>
+                  <option value="" hidden>
                     Lube
                   </option>
-                  <React.Fragment>{lItems}</React.Fragment>
+                  {lItems}
                   <option>Other</option>
                   <option>None</option>
                 </select>
@@ -150,11 +153,12 @@ function Create({ id, username, token, lubes, films }) {
                   {...register("film", { required: true })}
                   className="placeholder-gray-500 w-full border border-transparent rounded-md  focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent p-1"
                   placeholder="Switch Type"
+                  defaultValue=""
                 >
-                  <option className="text-gray-400" value="" disabled selected>
+                  <option value="" hidden>
                     Switch Film
                   </option>
-                  <React.Fragment>{fItems}</React.Fragment>
+                  {fItems}
                   <option>Other</option>
                   <option>None</option>
                 </select>
@@ -163,17 +167,17 @@ function Create({ id, username, token, lubes, films }) {
                   {errors.film?.type === "required" && "Film required"}
                 </span>
               </div>
-              <div class="flex w-full items-center justify-center pt-5">
-                <label class="w-full flex flex-col items-center px-2 py-4 bg-blue-500 font-bold text-white border-blue cursor-pointer rounded-lg shadow-md focus:outline-none  hover:bg-blue-700 transition-colors">
+              <div className="flex w-full items-center justify-center pt-5">
+                <label className="w-full flex flex-col items-center px-2 py-4 bg-blue-500 font-bold text-white border-blue cursor-pointer rounded-lg shadow-md focus:outline-none  hover:bg-blue-700 transition-colors">
                   <svg
-                    class="w-8 h-8"
+                    className="w-8 h-8"
                     fill="currentColor"
                     xmlns="http://www.w3.org/2000/svg"
                     viewBox="0 0 20 20"
                   >
                     <path d="M16.88 9.1A4 4 0 0 1 16 17H5a5 5 0 0 1-1-9.9V7a3 3 0 0 1 4.52-2.59A4.98 4.98 0 0 1 17 8c0 .38-.04.74-.12 1.1zM11 11h3l-4-4-4 4h3v3h2v-3z" />
                   </svg>
-                  <span class="mt-2 ">Select an image</span>
+                  <span className="mt-2 ">Select an image</span>
                   <input
                     {...register("picture", { required: true })}
                     type="file"
