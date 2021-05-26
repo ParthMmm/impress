@@ -20,9 +20,9 @@ function Register() {
   };
 
   return (
-    <div>
-      <div className="bg-white dark:bg-gray-800 font-sans min-h-screen antialiased pt-24 pb-5">
-        <h1 className="font-bold text-center text-4xl text-blue-500 pb-7">
+    <div className="bg-white dark:bg-gray-800 font-sans antialiased ">
+      <div className="flex flex-col justify-center sm:w-96 sm:m-auto mx-5 mb-5 space-y-8 h-screen ">
+        <h1 className="font-bold text-center text-4xl text-blue-500 pb-1">
           Im<span className="text-black dark:text-white">press</span>
         </h1>
         <div className="flex flex-col justify-center sm:w-96 sm:m-auto mx-5 mb-5 space-y-8 shadow-xl rounded-xl border-2 border-blue-500 dark:border-white">
