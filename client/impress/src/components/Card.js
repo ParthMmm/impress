@@ -27,7 +27,7 @@ function Card({ posts, token, likedPosts }) {
     dispatch(likePost(token, id));
   };
 
-  const allPosts = posts.reverse().map((post) => (
+  const allPosts = posts?.reverse().map((post) => (
     <div className="pb-5" key={post._id}>
       <div className="rounded-xl bg-white shadow-xl lg:max-w-2xl  max-w-wd mx-auto object-fill border border-gray-300 items-center">
         <header className="p-4 ">

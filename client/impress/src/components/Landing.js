@@ -1,9 +1,15 @@
 import React, { useEffect } from "react";
 import Card from "./Card";
+import { useDispatch, connect } from "react-redux";
+import { fetchPosts } from "../actions";
 
-function Landing() {
+function Landing({ token }) {
+  const dispatch = useDispatch();
+
   useEffect(() => {
     window.scrollTo(0, 0);
+    dispatch(fetchPosts(token));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
@@ -33,4 +39,8 @@ function Landing() {
   );
 }
 
-export default Landing;
+function mapStateToProps({ auth }) {
+  return { token: auth.token };
+}
+
+export default connect(mapStateToProps)(Landing);
