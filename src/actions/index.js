@@ -1,13 +1,6 @@
 import axios from "axios";
 
-import {
-  AUTH_RESET,
-  DISLIKE_POST,
-  FETCH_LIKES,
-  LIKE_POST,
-  USER_LOGOUT,
-  USER_REGISTER,
-} from "./types";
+import { AUTH_RESET, FETCH_LIKES, USER_LOGOUT, USER_REGISTER } from "./types";
 import { USER_LOGIN } from "./types";
 import { USER_PROFILE } from "./types";
 import { LOGIN_ERROR } from "./types";
@@ -46,11 +39,11 @@ export const userLogin = (data) => async (dispatch) => {
   }
 };
 
-export const userProfile = (data) => async (dispatch) => {
+export const userProfile = (token) => async (dispatch) => {
   const res = await axios.get(
-    `${process.env.REACT_APP_LOCAL_SERVER}user/profile?secret_token=${data}`
+    `${process.env.REACT_APP_LOCAL_SERVER}user/profile`,
+    { headers: { Authorization: `Bearer ${token}` } }
   );
-  console.log(res.data);
   const { user } = res.data;
   dispatch({ type: USER_PROFILE, payload: user });
 };
@@ -96,9 +89,14 @@ export const submitPost = (data) => async (dispatch) => {
   // dispatch({ type: USER_PROFILE, payload: user });
 };
 
-export const fetchPosts = (data) => async (dispatch) => {
+export const fetchPosts = (token) => async (dispatch) => {
+  // const res = await axios.get(
+  //   `${process.env.REACT_APP_LOCAL_SERVER}user/posts?secret_token=${data}`
+  // );
+
   const res = await axios.get(
-    `${process.env.REACT_APP_LOCAL_SERVER}user/posts?secret_token=${data}`
+    `${process.env.REACT_APP_LOCAL_SERVER}user/posts`,
+    { headers: { Authorization: `Bearer ${token}` } }
   );
 
   dispatch({ type: FETCH_POSTS, payload: res.data });
@@ -139,9 +137,14 @@ export const dislikePost = (token, id) => async (dispatch) => {
   dispatch({ type: FETCH_POSTS, payload: res.data });
 };
 
-export const fetchLikes = (data) => async (dispatch) => {
-  const res = await axios.post(
-    `${process.env.REACT_APP_LOCAL_SERVER}user/find_likes?secret_token=${data}`
+export const fetchLikes = (token) => async (dispatch) => {
+  // const res = await axios.post(
+  //   `${process.env.REACT_APP_LOCAL_SERVER}user/find_likes?secret_token=${data}`
+  // );
+
+  const res = await axios.get(
+    `${process.env.REACT_APP_LOCAL_SERVER}user/find_likes`,
+    { headers: { Authorization: `Bearer ${token}` } }
   );
 
   dispatch({ type: FETCH_LIKES, payload: res.data });

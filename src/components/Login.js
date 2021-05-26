@@ -29,15 +29,17 @@ function Login({ error, auth, msg }) {
   };
 
   return (
-    <div className="">
-      <div className="bg-white dark:bg-gray-800 font-sans min-h-screen antialiased pt-24 pb-5  ">
-        <h1 className="font-bold text-center text-4xl text-blue-500 pb-7">
+    <div className="bg-white dark:bg-gray-800 font-sans antialiased ">
+      <div className="flex flex-col justify-center sm:w-96 sm:m-auto mx-5 mb-5 space-y-8 h-screen ">
+        <h1 className="font-bold text-center text-4xl text-blue-500 pb-1 cursor-default">
           Im<span className="text-black dark:text-white">press</span>
         </h1>
         <div className="flex flex-col justify-center sm:w-96 sm:m-auto mx-5 mb-5 space-y-8 rounded-xl border-2 border-blue-500 dark:border-white">
           <form onSubmit={handleSubmit(onSubmit)}>
             <div className="flex flex-col bg-white p-10 rounded-lg shadow space-y-6">
-              <h1 className="font-bold text-xl text-center">Log In</h1>
+              <h1 className="font-bold text-xl text-center cursor-default">
+                Log In
+              </h1>
 
               <div className="flex flex-col space-y-1">
                 <input
@@ -71,7 +73,7 @@ function Login({ error, auth, msg }) {
               <div className="flex flex-col-reverse sm:flex-row sm:justify-between items-center">
                 <button
                   href="#"
-                  className="inline-block text-blue-500 hover:text-blue-800 transition-colors "
+                  className="inline-block text-blue-500 hover:text-blue-800 transition-colors pt-5 sm:pt-0"
                 >
                   Forgot your password?
                 </button>
