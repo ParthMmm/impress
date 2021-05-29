@@ -22,13 +22,15 @@ function Register() {
   return (
     <div className="bg-white dark:bg-gray-800 font-sans antialiased ">
       <div className="flex flex-col justify-center sm:w-96 sm:m-auto mx-5 mb-5 space-y-8 h-screen ">
-        <h1 className="font-bold text-center text-4xl text-blue-500 pb-1">
+        <h1 className="font-bold text-center text-4xl text-blue-500 pb-1 cursor-default">
           Im<span className="text-black dark:text-white">press</span>
         </h1>
         <div className="flex flex-col justify-center sm:w-96 sm:m-auto mx-5 mb-5 space-y-8 shadow-xl rounded-xl border-2 border-blue-500 dark:border-white">
           <form onSubmit={handleSubmit(onSubmit)}>
             <div className="flex flex-col bg-white p-10 rounded-lg shadow space-y-6">
-              <h1 className="font-bold text-xl text-center">Sign Up</h1>
+              <h1 className="font-bold text-xl text-center cursor-default">
+                Sign Up
+              </h1>
 
               <div className="flex flex-col space-y-1">
                 <input

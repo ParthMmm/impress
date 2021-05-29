@@ -10,7 +10,7 @@ import history from "../util/history";
 
 export const userRegister = (data) => async (dispatch) => {
   const res = await axios.post(
-    `${process.env.REACT_APP_LOCAL_SERVER}signup`,
+    `${process.env.REACT_APP_LOCAL_SERVER}api/signup`,
     data
   );
   // const { token } = res.data;
@@ -22,7 +22,7 @@ export const userRegister = (data) => async (dispatch) => {
 
 export const userLogin = (data) => async (dispatch) => {
   const res = await axios.post(
-    `${process.env.REACT_APP_LOCAL_SERVER}login`,
+    `${process.env.REACT_APP_LOCAL_SERVER}api/login`,
     data
   );
   console.log(res);
@@ -41,7 +41,7 @@ export const userLogin = (data) => async (dispatch) => {
 
 export const userProfile = (token) => async (dispatch) => {
   const res = await axios.get(
-    `${process.env.REACT_APP_LOCAL_SERVER}user/profile`,
+    `${process.env.REACT_APP_LOCAL_SERVER}api/user/profile`,
     { headers: { Authorization: `Bearer ${token}` } }
   );
   const { user } = res.data;
@@ -77,7 +77,7 @@ export const submitPost = (data) => async (dispatch) => {
   // );
   // console.log(res.data);
   const res1 = await axios.post(
-    `${process.env.REACT_APP_LOCAL_SERVER}user/create_post?secret_token=${data}`,
+    `${process.env.REACT_APP_LOCAL_SERVER}api/user/create_post?secret_token=${data}`,
     data
   );
   // axios.post(`${process.env.REACT_APP_LOCAL_SERVER}create_post`, formData, {
@@ -90,12 +90,8 @@ export const submitPost = (data) => async (dispatch) => {
 };
 
 export const fetchPosts = (token) => async (dispatch) => {
-  // const res = await axios.get(
-  //   `${process.env.REACT_APP_LOCAL_SERVER}user/posts?secret_token=${data}`
-  // );
-
   const res = await axios.get(
-    `${process.env.REACT_APP_LOCAL_SERVER}user/posts`,
+    `${process.env.REACT_APP_LOCAL_SERVER}api/user/posts`,
     { headers: { Authorization: `Bearer ${token}` } }
   );
 
@@ -104,7 +100,7 @@ export const fetchPosts = (token) => async (dispatch) => {
 
 export const fetchAccessories = () => async (dispatch) => {
   const res = await axios.get(
-    `${process.env.REACT_APP_LOCAL_SERVER}accessories`
+    `${process.env.REACT_APP_LOCAL_SERVER}api/accessories`
   );
 
   dispatch({ type: FETCH_ACCESSORIES, payload: res.data });
@@ -117,24 +113,24 @@ export const likePost = (token, id) => async (dispatch) => {
   const objID = { id };
 
   const res = await axios.post(
-    `${process.env.REACT_APP_LOCAL_SERVER}user/like_post`,
+    `${process.env.REACT_APP_LOCAL_SERVER}api/user/like_post`,
     objID,
     { headers: { Authorization: `Bearer ${token}` } }
   );
 
-  dispatch({ type: FETCH_POSTS, payload: res.data });
+  // dispatch({ type: FETCH_POSTS, payload: res.data });
 };
 
 export const dislikePost = (token, id) => async (dispatch) => {
   const objID = { id };
 
   const res = await axios.post(
-    `${process.env.REACT_APP_LOCAL_SERVER}user/dislike_post`,
+    `${process.env.REACT_APP_LOCAL_SERVER}api/user/dislike_post`,
     objID,
     { headers: { Authorization: `Bearer ${token}` } }
   );
 
-  dispatch({ type: FETCH_POSTS, payload: res.data });
+  // dispatch({ type: FETCH_POSTS, payload: res.data });
 };
 
 export const fetchLikes = (token) => async (dispatch) => {
@@ -143,7 +139,7 @@ export const fetchLikes = (token) => async (dispatch) => {
   // );
 
   const res = await axios.get(
-    `${process.env.REACT_APP_LOCAL_SERVER}user/find_likes`,
+    `${process.env.REACT_APP_LOCAL_SERVER}api/user/find_likes`,
     { headers: { Authorization: `Bearer ${token}` } }
   );
 

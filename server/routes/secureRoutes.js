@@ -9,7 +9,6 @@ let now = new Date();
 async function checkReaction(id, userID) {
   let liked = false;
   let disliked = false;
-  console.log(id, userID);
 
   let checkLiked = await PostModel.findById(id, {
     liked_by: { $elemMatch: { userID } },
@@ -17,17 +16,13 @@ async function checkReaction(id, userID) {
   let checkDisliked = await PostModel.findById(id, {
     disliked_by: { $elemMatch: { userID } },
   });
-
   if (checkLiked != null) {
-    if (checkLiked.liked_by.length != 0) {
-      console.log("liked");
+    if (checkLiked.liked_by != "") {
       liked = true;
     }
   }
   if (checkDisliked != null) {
-    if (checkDisliked.disliked_by.length != 0) {
-      console.log("disliked");
-
+    if (checkDisliked.disliked_by != "") {
       disliked = true;
     }
   }
@@ -43,7 +38,6 @@ const storage = multer.diskStorage({
 
 router.post("/upload_image", (req, res, next) => {
   const upload = multer({ storage }).single("file");
-  // res.send({ loading });
   upload(req, res, function (err) {
     if (err) {
       return res.send(err);
@@ -113,7 +107,6 @@ router.post("/create_post", (req, res, next) => {
 });
 
 router.get("/profile", (req, res, next) => {
-  console.log("ding");
   res.json({
     user: req.user,
   });
@@ -142,23 +135,19 @@ router.get("/find_likes", async (req, res, next) => {
 router.post("/dislike_post", async (req, res, next) => {
   const { id } = req.body;
 
-  let tmp = await checkReaction(id, req.user._id);
+  let tmp = await checkReaction(id, req.user.id);
   let liked = tmp[0];
   let disliked = tmp[1];
-
-  console.log(liked, disliked);
 
   if (liked) {
     PostModel.findByIdAndUpdate(id, {
       $inc: { dislikes: 1, likes: -1 },
-      $push: { disliked_by: { userID: req.user._id } },
-      $pull: { liked_by: { userID: req.user._id } },
+      $push: { disliked_by: { userID: req.user.id } },
+      $pull: { liked_by: { userID: req.user.id } },
     })
-      .then(async (result) => {
-        const posts = await PostModel.find();
-
+      .then((result) => {
         console.log("Removed like, added dislike");
-        res.status(200).send(posts);
+        res.status(200).send({ msg: "Disliked" });
       })
       .catch((error) => {
         console.log(error);
@@ -168,15 +157,12 @@ router.post("/dislike_post", async (req, res, next) => {
     res.status(401).send("Already Disliked");
   } else {
     PostModel.findByIdAndUpdate(id, {
-      $push: { disliked_by: { userID: req.user._id } },
+      $push: { disliked_by: { userID: req.user.id } },
       $inc: { dislikes: 1 },
     })
-      .then(async (result) => {
-        const posts = await PostModel.find();
-
+      .then((result) => {
         console.log("Disliked");
-        res.status(200).send(posts);
-        console.log("Disliked");
+        res.status(200).send({ msg: "Disliked" });
       })
       .catch((error) => {
         console.log(error);
@@ -188,23 +174,19 @@ router.post("/dislike_post", async (req, res, next) => {
 router.post("/like_post", async (req, res, next) => {
   const { id } = req.body;
 
-  let tmp = await checkReaction(id, req.user._id);
+  let tmp = await checkReaction(id, req.user.id);
   let liked = tmp[0];
   let disliked = tmp[1];
-
-  console.log(liked, disliked);
 
   if (disliked) {
     PostModel.findByIdAndUpdate(id, {
       $inc: { dislikes: -1, likes: 1 },
-      $push: { liked_by: { userID: req.user._id } },
-      $pull: { disliked_by: { userID: req.user._id } },
+      $push: { liked_by: { userID: req.user.id } },
+      $pull: { disliked_by: { userID: req.user.id } },
     })
-      .then(async (result) => {
-        const posts = await PostModel.find();
-
+      .then((result) => {
         console.log("Removed dislike, added like");
-        res.status(200).send(posts);
+        res.status(200).send({ msg: "Liked" });
       })
       .catch((error) => {
         console.log(error);
@@ -214,14 +196,12 @@ router.post("/like_post", async (req, res, next) => {
     res.status(401).send("Already Liked");
   } else {
     PostModel.findByIdAndUpdate(id, {
+      $push: { liked_by: { userID: req.user.id } },
       $inc: { likes: 1 },
-      $push: { liked_by: { userID: req.user._id } },
     })
-      .then(async (result) => {
-        const posts = await PostModel.find();
-
+      .then((result) => {
         console.log("Liked");
-        res.status(200).send(posts);
+        res.status(200).send({ msg: "Liked" });
       })
       .catch((error) => {
         console.log(error);

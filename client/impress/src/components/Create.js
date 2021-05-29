@@ -85,7 +85,7 @@ function Create({ id, username, token, lubes, films }) {
         <Loader message={message}></Loader>
       ) : (
         <div className="bg-white dark:bg-gray-800 font-sans antialiased ">
-          <div className="flex flex-col  justify-center sm:w-96 sm:m-auto mx-5 mb-5 space-y-8 h-screen ">
+          <div className="flex flex-col justify-center sm:w-96 sm:m-auto mx-5 mb-5 space-y-8 h-screen ">
             <div className="flex flex-col bg-white p-10 rounded-xl shadow-2xl space-y-6  border-2 border-blue-500 dark:border-white ">
               <form onSubmit={handleSubmit(onSubmit)}>
                 <div className="flex flex-col pb-2">

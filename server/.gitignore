@@ -161,9 +161,3 @@ docker-compose.yaml
 service.yaml
 server/Dockerfile.worker
 client/impress/Dockerfile
-
-Dockerfile
-Makefile
-docker-*
-Dockerfile.*
-Caddyfile.*
