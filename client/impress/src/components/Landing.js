@@ -1,14 +1,10 @@
 import React, { useEffect } from "react";
 import Card from "./Card";
-import { useDispatch, connect } from "react-redux";
-import { fetchPosts } from "../actions";
+import { connect } from "react-redux";
 
 function Landing({ token }) {
-  const dispatch = useDispatch();
-
   useEffect(() => {
     window.scrollTo(0, 0);
-    dispatch(fetchPosts(token));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 

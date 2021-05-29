@@ -114,8 +114,14 @@ router.get("/profile", (req, res, next) => {
 });
 
 router.get("/posts", async (req, res, next) => {
-  const posts = await PostModel.find();
-  res.send(posts);
+  await PostModel.find()
+    .then((result) => {
+      res.status(200);
+      res.send(result);
+    })
+    .catch((error) => {
+      res.status(404);
+    });
 });
 
 router.get("/find_likes", async (req, res, next) => {
@@ -123,7 +129,7 @@ router.get("/find_likes", async (req, res, next) => {
     liked_by: { $elemMatch: { userID: req.user.id } },
   })
     .then((result) => {
-      res.status(200);
+      res.status(201);
       res.json(result);
     })
     .catch((error) => {

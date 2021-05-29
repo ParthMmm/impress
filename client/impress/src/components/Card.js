@@ -8,17 +8,9 @@ function Card({ posts, token, likedPosts }) {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    // dispatch(fetchPosts(token));
-
-    fetchPostsAndLikes(token);
+    dispatch(fetchPosts());
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-  const fetchPostsAndLikes = (token) => {
-    dispatch(fetchLikes(token));
-
-    dispatch(fetchPosts(token));
-    // dispatch(fetchLikes(token));
-  };
 
   const dislike = (id) => {
     console.log("front end dislike");
@@ -43,6 +35,7 @@ function Card({ posts, token, likedPosts }) {
       return <Loader message="Fetching Posts..."></Loader>;
 
     // return <Loader message="Fetching Posts..."></Loader>;
+
     default:
       return posts.reverse().map((post) => (
         <div className="pb-5" key={post._id}>

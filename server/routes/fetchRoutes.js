@@ -3,6 +3,18 @@ const LubeModel = require("../models/Lube");
 const FilmModel = require("../models/Film");
 const PostModel = require("../models/Post");
 
+router.get("/posts", async (req, res, next) => {
+  await PostModel.find()
+    .then((result) => {
+      res.status(200).send(result);
+      // res.send(result);
+    })
+    .catch((error) => {
+      res.status(404);
+    });
+  return next();
+});
+
 router.get("/accessories", async (req, res, next) => {
   const lubes = await LubeModel.find();
   const films = await FilmModel.find();

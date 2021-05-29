@@ -89,13 +89,11 @@ export const logOut = () => async (dispatch) => {
 //   // dispatch({ type: USER_PROFILE, payload: user });
 // };
 
-export const fetchPosts = (token) => async (dispatch) => {
-  const res = await axios.get(
-    `${process.env.REACT_APP_LOCAL_SERVER}api/user/posts`,
-    { headers: { Authorization: `Bearer ${token}` } }
-  );
-
-  dispatch({ type: FETCH_POSTS, payload: res.data });
+export const fetchPosts = () => async (dispatch) => {
+  const res = await axios.get(`${process.env.REACT_APP_LOCAL_SERVER}api/posts`);
+  if (res.status === 200) {
+    dispatch({ type: FETCH_POSTS, payload: res.data });
+  }
 };
 
 export const fetchAccessories = () => async (dispatch) => {
