@@ -13,6 +13,7 @@ function Create({ id, username, token, lubes, films }) {
 
   useEffect(() => {
     dispatch(fetchAccessories());
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -26,15 +27,15 @@ function Create({ id, username, token, lubes, films }) {
   const onSubmit = async (data) => {
     let formData = new FormData();
     formData.append("file", file);
-    setMessage("Uploading Image");
+    setMessage("Uploading Image 📁");
     setLoader(true);
 
     const res = await axios.post(
-      `${process.env.REACT_APP_LOCAL_SERVER}user/upload_image`,
+      `${process.env.REACT_APP_LOCAL_SERVER}api/user/upload_image`,
       formData,
       { headers: { Authorization: `Bearer ${token}` } }
     );
-    setMessage("Creating Post");
+    setMessage("Creating Post 🗃️");
 
     console.log(res);
 
@@ -45,7 +46,7 @@ function Create({ id, username, token, lubes, films }) {
     data.username = username;
 
     const res2 = await axios.post(
-      `${process.env.REACT_APP_LOCAL_SERVER}user/create_post`,
+      `${process.env.REACT_APP_LOCAL_SERVER}api/user/create_post`,
       data,
       { headers: { Authorization: `Bearer ${token}` } }
     );
@@ -67,17 +68,6 @@ function Create({ id, username, token, lubes, films }) {
   const fileHandler = (e) => {
     setFile(e.target.files[0]);
   };
-  let lubeItems = [];
-  lubes.map((lube) => lubeItems.push(lube));
-  let lItems = lubeItems.sort().map((i) => {
-    return <option key={i._id}>{i.name}</option>;
-  });
-
-  let filmItems = [];
-  films.map((film) => filmItems.push(film));
-  let fItems = filmItems.sort().map((i) => {
-    return <option key={i._id}>{i.name}</option>;
-  });
 
   return (
     <div>
@@ -155,7 +145,9 @@ function Create({ id, username, token, lubes, films }) {
                     <option value="" hidden>
                       Lube
                     </option>
-                    {lItems}
+                    {lubes.sort().map((lube) => {
+                      return <option key={lube._id}>{lube.name}</option>;
+                    })}
                     <option>Other</option>
                     <option>None</option>
                   </select>
@@ -174,7 +166,9 @@ function Create({ id, username, token, lubes, films }) {
                     <option value="" hidden>
                       Switch Film
                     </option>
-                    {fItems}
+                    {films.sort().map((film) => {
+                      return <option key={film._id}>{film.name}</option>;
+                    })}
                     <option>Other</option>
                     <option>None</option>
                   </select>

@@ -65,29 +65,29 @@ export const logOut = () => async (dispatch) => {
   dispatch({ type: USER_LOGOUT });
 };
 
-export const submitPost = (data) => async (dispatch) => {
-  console.log(data);
-  // const res = await axios.post(
-  //   "https://api.cloudinary.com/v1_1/dnswq1qos/upload",
-  //   data.picture,
-  //   {
-  //     upload_preset: "bkbn5m1r",
-  //   },
-  //   { headers: { "Content-Type": null } }
-  // );
-  // console.log(res.data);
-  const res1 = await axios.post(
-    `${process.env.REACT_APP_LOCAL_SERVER}api/user/create_post?secret_token=${data}`,
-    data
-  );
-  // axios.post(`${process.env.REACT_APP_LOCAL_SERVER}create_post`, formData, {
-  //   headers: { "Content-type": "application/x-www-form-urlencoded" },
-  // });
+// export const submitPost = (data) => async (dispatch) => {
+//   console.log(data);
+//   // const res = await axios.post(
+//   //   "https://api.cloudinary.com/v1_1/dnswq1qos/upload",
+//   //   data.picture,
+//   //   {
+//   //     upload_preset: "bkbn5m1r",
+//   //   },
+//   //   { headers: { "Content-Type": null } }
+//   // );
+//   // console.log(res.data);
+//   const res1 = await axios.post(
+//     `${process.env.REACT_APP_LOCAL_SERVER}api/user/create_post?secret_token=${data}`,
+//     data
+//   );
+//   // axios.post(`${process.env.REACT_APP_LOCAL_SERVER}create_post`, formData, {
+//   //   headers: { "Content-type": "application/x-www-form-urlencoded" },
+//   // });
 
-  console.log(res1.data);
+//   console.log(res1.data);
 
-  // dispatch({ type: USER_PROFILE, payload: user });
-};
+//   // dispatch({ type: USER_PROFILE, payload: user });
+// };
 
 export const fetchPosts = (token) => async (dispatch) => {
   const res = await axios.get(

@@ -31,11 +31,18 @@ function Card({ posts, token, likedPosts }) {
 
     dispatch(likePost(token, id));
   };
+  // if (!posts) {
+  //   console.log("dne");
+  // }
+  // console.log(posts.length === 0);
   // const allPosts = p;
 
   switch (posts) {
-    // case undefined || posts.length === 0:
-    //   return <Loader message="Fetching Posts..."></Loader>;
+    case null:
+      console.log("empty");
+      return <Loader message="Fetching Posts..."></Loader>;
+
+    // return <Loader message="Fetching Posts..."></Loader>;
     default:
       return posts.reverse().map((post) => (
         <div className="pb-5" key={post._id}>
