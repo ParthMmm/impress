@@ -7,6 +7,7 @@ import { LOGIN_ERROR } from "./types";
 import { FETCH_POSTS } from "./types";
 import { FETCH_ACCESSORIES } from "./types";
 import history from "../util/history";
+import { persist } from "../util/store";
 
 export const userRegister = (data) => async (dispatch) => {
   const res = await axios.post(
@@ -25,7 +26,6 @@ export const userLogin = (data) => async (dispatch) => {
     `${process.env.REACT_APP_LOCAL_SERVER}api/login`,
     data
   );
-  console.log(res);
   if (res.status === 201) {
     // console.log(res.data);
     dispatch({
@@ -51,11 +51,13 @@ export const userProfile = (token) => async (dispatch) => {
 export const userLogOut = () => async (dispatch) => {
   await axios.get(`${process.env.REACT_APP_LOCAL_SERVER}api/logout`);
   history.push("/");
+  persist.flush();
   dispatch({ type: AUTH_RESET });
 };
 
 export const authError = () => (dispatch) => {
-  console.log("error");
+  persist.flush();
+
   dispatch({ type: AUTH_RESET });
 };
 
@@ -90,7 +92,15 @@ export const logOut = () => async (dispatch) => {
 // };
 
 export const fetchPosts = () => async (dispatch) => {
-  const res = await axios.get(`${process.env.REACT_APP_LOCAL_SERVER}api/posts`);
+  const res = await axios.get(
+    `${process.env.REACT_APP_LOCAL_SERVER}api/posts`,
+    {
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+    }
+  );
   if (res.status === 200) {
     dispatch({ type: FETCH_POSTS, payload: res.data });
   }

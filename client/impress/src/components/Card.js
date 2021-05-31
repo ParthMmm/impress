@@ -3,6 +3,7 @@ import { fetchPosts, fetchLikes, dislikePost, likePost } from "../actions/";
 import { connect, useDispatch } from "react-redux";
 import { LIKE_POST } from "../actions/types";
 import Loader from "./Loader";
+import axios from "axios";
 
 function Card({ posts, token, likedPosts }) {
   const dispatch = useDispatch();
@@ -13,12 +14,10 @@ function Card({ posts, token, likedPosts }) {
   }, []);
 
   const dislike = (id) => {
-    console.log("front end dislike");
     posts.dislikes = posts.dislikes - 1;
     dispatch(dislikePost(token, id));
   };
   const like = (id) => {
-    console.log("front end like");
     posts.dislikes = posts.dislikes + 1;
 
     dispatch(likePost(token, id));
@@ -31,7 +30,8 @@ function Card({ posts, token, likedPosts }) {
 
   switch (posts) {
     case null:
-      console.log("empty");
+      return <Loader message="Fetching Posts..."></Loader>;
+    case "":
       return <Loader message="Fetching Posts..."></Loader>;
 
     // return <Loader message="Fetching Posts..."></Loader>;

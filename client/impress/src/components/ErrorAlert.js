@@ -6,7 +6,6 @@ function ErrorAlert({ msg }) {
     // Update the document title using the browser API
     setShowError(true);
   }, []);
-  console.log(showError);
   return (
     // <div className="">
     //   <div

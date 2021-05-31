@@ -18,8 +18,6 @@ function Login({ error, auth, msg }) {
   const onSubmit = (data) => {
     dispatch(userLogin(data));
     reset();
-
-    console.log(data);
   };
 
   const onRegisterClick = () => {

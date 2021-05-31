@@ -6,8 +6,7 @@ const PostModel = require("../models/Post");
 router.get("/posts", async (req, res, next) => {
   await PostModel.find()
     .then((result) => {
-      res.status(200).send(result);
-      // res.send(result);
+      res.status(200).json(result);
     })
     .catch((error) => {
       res.status(404);
@@ -24,7 +23,6 @@ router.get("/accessories", async (req, res, next) => {
 
 router.post("/like_post", async (req, res, next) => {
   const { id, userID } = req.body;
-  console.log(id, userID);
 
   let tmp = await checkReaction(id, userID);
   let liked = tmp[0];
@@ -37,11 +35,9 @@ router.post("/like_post", async (req, res, next) => {
       $pull: { disliked_by: { userID } },
     })
       .then((result) => {
-        console.log("Removed dislike, added like");
         res.status(200).send("Liked");
       })
       .catch((error) => {
-        console.log(error);
         res.status(400);
       });
   } else if (liked) {
@@ -52,11 +48,9 @@ router.post("/like_post", async (req, res, next) => {
       $inc: { likes: 1 },
     })
       .then((result) => {
-        console.log("Liked");
         res.status(200).send("Liked");
       })
       .catch((error) => {
-        console.log(error);
         res.status(400);
       });
   }
@@ -68,10 +62,9 @@ router.post("/find_likes", async (req, res, next) => {
     liked_by: { $elemMatch: { userID: "6099a6b26506d7479e4d2563" } },
   })
     .then((result) => {
-      console.log(result);
+      res.status(200);
     })
     .catch((error) => {
-      console.log(error);
       res.send("error");
     });
   res.send("success");
@@ -79,13 +72,10 @@ router.post("/find_likes", async (req, res, next) => {
 
 router.post("/dislike_post", async (req, res, next) => {
   const { id, userID } = req.body;
-  console.log(id);
 
   let tmp = await checkReaction(id, userID);
   let liked = tmp[0];
   let disliked = tmp[1];
-
-  console.log(liked, disliked);
 
   if (liked) {
     PostModel.findByIdAndUpdate(id, {
@@ -94,11 +84,9 @@ router.post("/dislike_post", async (req, res, next) => {
       $pull: { liked_by: { userID } },
     })
       .then((result) => {
-        console.log("Removed like, added dislike");
         res.status(200).send("Disliked");
       })
       .catch((error) => {
-        console.log(error);
         res.status(400);
       });
   } else if (disliked) {
@@ -109,11 +97,9 @@ router.post("/dislike_post", async (req, res, next) => {
       $inc: { dislikes: 1 },
     })
       .then((result) => {
-        console.log("Disliked");
         res.status(200).send("Disliked");
       })
       .catch((error) => {
-        console.log(error);
         res.status(400);
       });
   }

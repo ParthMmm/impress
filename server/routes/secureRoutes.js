@@ -3,6 +3,7 @@ const router = require("express").Router();
 const multer = require("multer");
 const PostModel = require("../models/Post");
 const dateFormat = require("dateformat");
+const cloudinary = require("cloudinary").v2;
 
 let now = new Date();
 
@@ -42,11 +43,8 @@ router.post("/upload_image", (req, res, next) => {
     if (err) {
       return res.send(err);
     }
-    console.log("file uploaded to server");
-    console.log(req.file);
 
     // SEND FILE TO CLOUDINARY
-    const cloudinary = require("cloudinary").v2;
     cloudinary.config({
       cloud_name: "dnswq1qos",
       api_key: "987928289228622",
@@ -61,7 +59,6 @@ router.post("/upload_image", (req, res, next) => {
       { public_id: `impress/posts/${uniqueFilename}`, tags: `img` }, // directory and tags are optional
       function (err, image) {
         if (err) return res.send(err);
-        console.log("file uploaded to Cloudinary");
         // remove file from server
         const fs = require("fs");
         fs.unlinkSync(path);
@@ -83,8 +80,6 @@ router.post("/create_post", (req, res, next) => {
     username,
   } = req.body;
 
-  console.log(req.body);
-
   const post = new PostModel({
     title,
     description,
@@ -97,12 +92,8 @@ router.post("/create_post", (req, res, next) => {
     _user: req.user._id,
     datePosted: dateFormat(now, "default"),
   });
-  console.log(dateFormat(now, "default"));
 
-  PostModel.create(post),
-    function (err) {
-      console.log(err);
-    };
+  PostModel.create(post), function (err) {};
   res.status(200).send("Successfully Uploaded");
 });
 
@@ -111,17 +102,6 @@ router.get("/profile", (req, res, next) => {
     user: req.user,
   });
   return;
-});
-
-router.get("/posts", async (req, res, next) => {
-  await PostModel.find()
-    .then((result) => {
-      res.status(200);
-      res.send(result);
-    })
-    .catch((error) => {
-      res.status(404);
-    });
 });
 
 router.get("/find_likes", async (req, res, next) => {
@@ -133,7 +113,6 @@ router.get("/find_likes", async (req, res, next) => {
       res.json(result);
     })
     .catch((error) => {
-      console.log(error);
       res.status(404);
     });
 });
@@ -152,11 +131,9 @@ router.post("/dislike_post", async (req, res, next) => {
       $pull: { liked_by: { userID: req.user.id } },
     })
       .then((result) => {
-        console.log("Removed like, added dislike");
         res.status(200).send({ msg: "Disliked" });
       })
       .catch((error) => {
-        console.log(error);
         res.status(400);
       });
   } else if (disliked) {
@@ -167,11 +144,9 @@ router.post("/dislike_post", async (req, res, next) => {
       $inc: { dislikes: 1 },
     })
       .then((result) => {
-        console.log("Disliked");
         res.status(200).send({ msg: "Disliked" });
       })
       .catch((error) => {
-        console.log(error);
         res.status(400);
       });
   }
@@ -191,11 +166,9 @@ router.post("/like_post", async (req, res, next) => {
       $pull: { disliked_by: { userID: req.user.id } },
     })
       .then((result) => {
-        console.log("Removed dislike, added like");
         res.status(200).send({ msg: "Liked" });
       })
       .catch((error) => {
-        console.log(error);
         res.status(400);
       });
   } else if (liked) {
@@ -206,11 +179,9 @@ router.post("/like_post", async (req, res, next) => {
       $inc: { likes: 1 },
     })
       .then((result) => {
-        console.log("Liked");
         res.status(200).send({ msg: "Liked" });
       })
       .catch((error) => {
-        console.log(error);
         res.status(400);
       });
   }
