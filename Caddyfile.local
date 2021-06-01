@@ -1,0 +1,9 @@
+0.0.0.0:80 {
+  root * /srv
+
+  route {
+    reverse_proxy /api* impress-backend:8000
+    try_files {path} /index.html
+    file_server
+  }
+}

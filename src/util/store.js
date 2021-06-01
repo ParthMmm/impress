@@ -10,6 +10,7 @@ const persistConfig = {
   // configuration object for redux-persist
   key: "root",
   storage: storage, // define which storage to use
+  whitelist: ["user", "auth"],
 };
 
 const persistedReducer = persistReducer(persistConfig, reducers); // create a persisted reducer
@@ -21,4 +22,17 @@ const store = createStore(
 
 const persist = persistStore(store); // used to create the persisted store, persistor will be used in the next step
 
+// const purge = () => {
+//   return new Promise((resolve, reject) => {
+//     // Purge RAM cached reducer states
+//     store.dispatch({ type: "RESET" });
+
+//     // Purge disk cached reducer states
+//     const persistor = persist(store, {}, (err) => {
+//       if (err) reject(err);
+//       resolve();
+//     });
+//     persistor.purge(); // v5 returns a promise, might want to await
+//   });
+// };
 export { store, persist };

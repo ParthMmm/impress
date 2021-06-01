@@ -11,3 +11,6 @@ export const LIKE_POST = "like_post";
 export const DISLIKE_POST = "dislike_post";
 
 export const FETCH_LIKES = "fetch_likes";
+export const LIKE_SUCCESS = "like_success";
+export const LIKE_ERROR = "like_error";
+export const FETCH_DISLIKES = "fetch_dislikes";

@@ -1,29 +1,26 @@
 import React, { useEffect } from "react";
-import Card from "./Card";
-import { useDispatch, connect } from "react-redux";
-import { fetchPosts } from "../actions";
+import CardList from "./Cards/CardList";
+import { connect, useDispatch } from "react-redux";
 
 function Landing({ token }) {
-  const dispatch = useDispatch();
-
   useEffect(() => {
     window.scrollTo(0, 0);
-    dispatch(fetchPosts(token));
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
     <div className="overflow-hidden ">
-      <div className="flex flex-row overflow-hidden sticky justify-center my-16 mt-15 pt-1 ">
-        <div className=" overflow-hidden sticky h-screen flex flex-1 ">
+      <div className="flex flex-row overflow-hidden h-screen sticky justify-center my-16 mt-15 pt-1 ">
+        <div className=" overflow-hidden sticky flex flex-1 ">
           {/* <div className="hidden md:flex pt-5 pr-5 flex-col flex-auto sticky top-0 h-screen">
             <div className="bg-white  h-10 w-10">
               <h1>poggers</h1>
             </div>
           </div> */}
           <div className="flex-auto sticky flex ">
-            <div className="flex-auto overflow-y-scroll ">
-              <Card />
+            <div className="flex-auto overflow-y-auto ">
+              <CardList />
             </div>
           </div>
           {/* <div className="hidden pt-5 pl-5 flex-col flex-auto sticky top-0 h-screen md:flex"></div>
