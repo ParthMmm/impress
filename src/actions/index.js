@@ -5,8 +5,6 @@ import {
   FETCH_LIKES,
   USER_LOGOUT,
   USER_REGISTER,
-  LIKE_SUCCESS,
-  LIKE_ERROR,
   FETCH_DISLIKES,
   LIKE_POST,
   DISLIKE_POST,
@@ -17,6 +15,7 @@ import { LOGIN_ERROR } from "./types";
 import { FETCH_POSTS } from "./types";
 import { FETCH_ACCESSORIES } from "./types";
 import history from "../util/history";
+import { persist } from "../util/store";
 
 export const userRegister = (data) => async (dispatch) => {
   const res = await axios.post(
@@ -35,7 +34,6 @@ export const userLogin = (data) => async (dispatch) => {
     `${process.env.REACT_APP_LOCAL_SERVER}api/login`,
     data
   );
-  console.log(res);
   if (res.status === 201) {
     // console.log(res.data);
     dispatch({
@@ -44,6 +42,11 @@ export const userLogin = (data) => async (dispatch) => {
     });
   } else {
     const { token } = res.data;
+    // history.push("/");
+    history.push({
+      pathname: "/loading",
+      state: { message: "Fetching Your Info  😎", path: "/" },
+    });
     dispatch({ type: USER_LOGIN, payload: { token, authorized: true } });
   }
 };
@@ -58,13 +61,21 @@ export const userProfile = (token) => async (dispatch) => {
 };
 
 export const userLogOut = () => async (dispatch) => {
-  await axios.get(`${process.env.REACT_APP_LOCAL_SERVER}api/logout`);
-  history.push("/");
-  dispatch({ type: AUTH_RESET });
+  await axios
+    .get(`${process.env.REACT_APP_LOCAL_SERVER}api/logout`)
+    .then(() => dispatch({ type: AUTH_RESET }))
+    .then(() => persist.flush())
+    .then(() =>
+      history.push({
+        pathname: "/loading",
+        state: { message: "Signing Out  ", path: "/" },
+      })
+    );
 };
 
 export const authError = () => (dispatch) => {
-  console.log("error");
+  persist.flush();
+
   dispatch({ type: AUTH_RESET });
 };
 
@@ -99,7 +110,15 @@ export const logOut = () => async (dispatch) => {
 // };
 
 export const fetchPosts = () => async (dispatch) => {
-  const res = await axios.get(`${process.env.REACT_APP_LOCAL_SERVER}api/posts`);
+  const res = await axios.get(
+    `${process.env.REACT_APP_LOCAL_SERVER}api/posts`,
+    {
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+    }
+  );
   if (res.status === 200) {
     dispatch({ type: FETCH_POSTS, payload: res.data });
   }

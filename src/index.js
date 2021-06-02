@@ -6,10 +6,13 @@ import "./index.css";
 import { Provider } from "react-redux";
 import { PersistGate } from "redux-persist/integration/react";
 import { store, persist } from "./util/store";
-
+import LoadingScreen from "./components/Loaders/LoadingScreen";
 ReactDOM.render(
   <Provider store={store}>
-    <PersistGate loading={null} persistor={persist}>
+    <PersistGate
+      loading={<LoadingScreen message="Loading" pathname="/" />}
+      persistor={persist}
+    >
       <App />
     </PersistGate>
   </Provider>,

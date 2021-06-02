@@ -5,17 +5,27 @@ import postsReducer from "./postsReducer";
 import fetchReducer from "./fetchReducer";
 import likesReducer from "./likesReducer";
 import updateReducer from "./updateReducer";
-import likeReducer from "./likeReducer";
+import likesUpdateReducer from "./likesUpdateReducer";
 import dislikesReducer from "./dislikesReducer";
+import { AUTH_RESET } from "../actions/types";
 
-export default combineReducers({
+const appReducer = combineReducers({
   // register: registerReducer,
   auth: loginReducer,
   user: authReducer,
   posts: postsReducer,
   likedPosts: likesReducer,
   dislikedPosts: dislikesReducer,
-  like: likeReducer,
+  likesUpdated: likesUpdateReducer,
   fetchData: fetchReducer,
   updatedPost: updateReducer,
 });
+
+const rootReducer = (state, action) => {
+  if (action.type === AUTH_RESET) {
+    state = undefined;
+  }
+  return appReducer(state, action);
+};
+
+export default rootReducer;

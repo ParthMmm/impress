@@ -14,3 +14,4 @@ export const FETCH_LIKES = "fetch_likes";
 export const LIKE_SUCCESS = "like_success";
 export const LIKE_ERROR = "like_error";
 export const FETCH_DISLIKES = "fetch_dislikes";
+export const FETCH_LIKES_SUCCESS = "fetch_likes_success";
