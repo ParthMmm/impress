@@ -6,7 +6,6 @@ import "./index.css";
 import { Provider } from "react-redux";
 import { PersistGate } from "redux-persist/integration/react";
 import { store, persist } from "./util/store";
-import Loader from "./components/Loader";
 import LoadingScreen from "./components/LoadingScreen";
 ReactDOM.render(
   <Provider store={store}>

@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { connect, useDispatch } from "react-redux";
 import _ from "lodash";
 import axios from "axios";
-import { fetchLikes, fetchDislikes } from "../../actions";
 import { FETCH_LIKES_SUCCESS } from "../../actions/types";
 
 function Card({ post, token, likedPosts, dislikedPosts, updatedPost }) {
@@ -35,23 +34,18 @@ function Card({ post, token, likedPosts, dislikedPosts, updatedPost }) {
         objID,
         { headers: { Authorization: `Bearer ${token}` } }
       );
-      console.log(res);
-
-      console.log(res.data.likes, res.data.dislikes);
 
       setDislikes(res.data.dislikes);
       setLikes(res.data.likes);
       setLiked(false);
       setDisliked(true);
     } catch (error) {
-      console.log(error);
+      //show an auth toast msg
     }
   };
 
   const likeHandler = async (id) => {
     const objID = { id };
-
-    console.log("front end like");
 
     try {
       const res = await axios.post(

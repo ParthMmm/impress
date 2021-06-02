@@ -13,7 +13,6 @@ function CardList({ posts, token, likesUpdated }) {
     if (token) {
       dispatch(fetchLikes(token));
       dispatch(fetchDislikes(token));
-      console.log(likesUpdated);
     }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -26,16 +25,6 @@ function CardList({ posts, token, likesUpdated }) {
   } else {
     return <Loader message="Fetching Posts..."></Loader>;
   }
-
-  // switch (posts) {
-  //   case null:
-  //     console.log("empty");
-  //     return <Loader message="Fetching Posts..."></Loader>;
-  //   case "":
-  //     return <Loader message="Fetching Posts..."></Loader>;
-  //   default:
-  //     return posts.map((post) => <Card key={post._id} post={post}></Card>);
-  // }
 }
 
 function mapStateToProps({ posts, auth, likesUpdated }) {

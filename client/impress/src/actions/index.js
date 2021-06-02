@@ -5,12 +5,9 @@ import {
   FETCH_LIKES,
   USER_LOGOUT,
   USER_REGISTER,
-  LIKE_SUCCESS,
-  LIKE_ERROR,
   FETCH_DISLIKES,
   LIKE_POST,
   DISLIKE_POST,
-  FETCH_LIKES_SUCCESS,
 } from "./types";
 import { USER_LOGIN } from "./types";
 import { USER_PROFILE } from "./types";
@@ -165,16 +162,12 @@ export const dislikePost = (token, id) => async (dispatch) => {
 };
 
 export const fetchLikes = (token) => async (dispatch) => {
-  await axios
-    .get(`${process.env.REACT_APP_LOCAL_SERVER}api/user/find_likes`, {
-      headers: { Authorization: `Bearer ${token}` },
-    })
-    .then((res) =>
-      dispatch({ type: FETCH_LIKES, payload: { likes: res.data } })
-    )
-    .then(() =>
-      dispatch({ type: FETCH_LIKES_SUCCESS, payload: { fetched: true } })
-    );
+  const res = await axios.get(
+    `${process.env.REACT_APP_LOCAL_SERVER}api/user/find_likes`,
+    { headers: { Authorization: `Bearer ${token}` } }
+  );
+
+  dispatch({ type: FETCH_LIKES, payload: { likes: res.data } });
 };
 
 export const fetchDislikes = (token) => async (dispatch) => {

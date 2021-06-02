@@ -170,8 +170,6 @@ router.post("/dislike_post", async (req, res, next) => {
       { new: true }
     )
       .then((result) => {
-        console.log(result);
-
         console.log("Removed like, added dislike");
         res.status(200).send(result);
       })
@@ -223,7 +221,6 @@ router.post("/like_post", async (req, res, next) => {
       { new: true }
     )
       .then((result) => {
-        console.log(result);
         console.log("Removed dislike, added like");
         res.status(200).send(result);
       })
@@ -243,8 +240,6 @@ router.post("/like_post", async (req, res, next) => {
       { new: true }
     )
       .then((result) => {
-        console.log(result);
-
         console.log("Liked");
         res.status(200).send(result);
       })

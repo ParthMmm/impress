@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import Loader from "./Loader";
 import history from "../util/history";
 import { connect, useDispatch } from "react-redux";
@@ -22,18 +22,12 @@ function LoadingScreen({
   fetchData,
 }) {
   const dispatch = useDispatch();
-  //   const [msg, setMessage] = useState("");
-  //   const [path, setPath] = useState("");
   let msg, path;
   if (location) {
-    // setPath(location.state.path);
-    console.log(location.state);
     msg = location.state.message;
     path = location.state.path;
-    // setMessage(location.state.message);
   }
   if (message && pathname) {
-    // setMessage(message);
     msg = message;
     path = pathname;
   }

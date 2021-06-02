@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import CardList from "./Cards/CardList";
-import { connect, useDispatch } from "react-redux";
+import { connect } from "react-redux";
 
 function Landing({ token }) {
   useEffect(() => {
