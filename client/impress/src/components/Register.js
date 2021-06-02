@@ -15,7 +15,6 @@ function Register() {
   const dispatch = useDispatch();
   const onSubmit = (data) => {
     dispatch(userRegister(data));
-    console.log(data);
     reset();
   };
 

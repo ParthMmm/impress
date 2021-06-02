@@ -65,7 +65,6 @@ router.get("/current_user", (req, res, next) => {
 });
 
 router.get("/logout", (req, res, next) => {
-  console.log("logout");
   req.logout();
   res.json({ user: req.user });
 });
