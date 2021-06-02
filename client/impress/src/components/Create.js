@@ -4,7 +4,7 @@ import { connect, useDispatch } from "react-redux";
 import { fetchAccessories } from "../actions";
 import axios from "axios";
 import history from "../util/history";
-import Loader from "./Loader";
+import Loader from "./Loaders/Loader";
 function Create({ id, username, token, lubes, films }) {
   const dispatch = useDispatch();
   const [file, setFile] = useState(null);
