@@ -1,10 +1,11 @@
 import React, { useEffect } from "react";
-import Card from "./Card";
+import CardList from "./Cards/CardList";
 import { connect } from "react-redux";
 
 function Landing({ token }) {
   useEffect(() => {
     window.scrollTo(0, 0);
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -19,7 +20,7 @@ function Landing({ token }) {
           </div> */}
           <div className="flex-auto sticky flex ">
             <div className="flex-auto overflow-y-auto ">
-              <Card />
+              <CardList />
             </div>
           </div>
           {/* <div className="hidden pt-5 pl-5 flex-col flex-auto sticky top-0 h-screen md:flex"></div>

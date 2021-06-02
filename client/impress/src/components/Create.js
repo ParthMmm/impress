@@ -8,11 +8,14 @@ import Loader from "./Loader";
 function Create({ id, username, token, lubes, films }) {
   const dispatch = useDispatch();
   const [file, setFile] = useState(null);
-  const [loader, setLoader] = useState(false);
+  const [loader, setLoader] = useState(true);
   const [message, setMessage] = useState("");
 
   useEffect(() => {
+    setMessage("Fetching Lubes & Films");
     dispatch(fetchAccessories());
+
+    setLoader(false);
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);

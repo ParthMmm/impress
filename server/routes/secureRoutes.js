@@ -105,7 +105,7 @@ router.get("/profile", (req, res, next) => {
 });
 
 router.get("/find_likes", async (req, res, next) => {
-  PostModel.find({
+  await PostModel.find({
     liked_by: { $elemMatch: { userID: req.user.id } },
   })
     .then((result) => {
@@ -113,6 +113,20 @@ router.get("/find_likes", async (req, res, next) => {
       res.json(result);
     })
     .catch((error) => {
+      res.status(404);
+    });
+});
+
+router.get("/find_dislikes", async (req, res, next) => {
+  await PostModel.find({
+    disliked_by: { $elemMatch: { userID: req.user.id } },
+  })
+    .then((result) => {
+      res.status(201);
+      res.json(result);
+    })
+    .catch((error) => {
+      console.log(error);
       res.status(404);
     });
 });
@@ -125,28 +139,39 @@ router.post("/dislike_post", async (req, res, next) => {
   let disliked = tmp[1];
 
   if (liked) {
-    PostModel.findByIdAndUpdate(id, {
-      $inc: { dislikes: 1, likes: -1 },
-      $push: { disliked_by: { userID: req.user.id } },
-      $pull: { liked_by: { userID: req.user.id } },
-    })
+    PostModel.findByIdAndUpdate(
+      id,
+      {
+        $inc: { dislikes: 1, likes: -1 },
+        $push: { disliked_by: { userID: req.user.id } },
+        $pull: { liked_by: { userID: req.user.id } },
+      },
+      { new: true }
+    )
       .then((result) => {
-        res.status(200).send({ msg: "Disliked" });
+        console.log("Removed like, added dislike");
+        res.status(200).send(result);
       })
       .catch((error) => {
         res.status(400);
       });
   } else if (disliked) {
-    res.status(401).send("Already Disliked");
+    res.status(400).send("Already Disliked");
   } else {
-    PostModel.findByIdAndUpdate(id, {
-      $push: { disliked_by: { userID: req.user.id } },
-      $inc: { dislikes: 1 },
-    })
+    PostModel.findByIdAndUpdate(
+      id,
+      {
+        $push: { disliked_by: { userID: req.user.id } },
+        $inc: { dislikes: 1 },
+      },
+      { new: true }
+    )
       .then((result) => {
-        res.status(200).send({ msg: "Disliked" });
+        console.log("Disliked");
+        res.status(200).send(result);
       })
       .catch((error) => {
+        console.log(error);
         res.status(400);
       });
   }
@@ -160,26 +185,36 @@ router.post("/like_post", async (req, res, next) => {
   let disliked = tmp[1];
 
   if (disliked) {
-    PostModel.findByIdAndUpdate(id, {
-      $inc: { dislikes: -1, likes: 1 },
-      $push: { liked_by: { userID: req.user.id } },
-      $pull: { disliked_by: { userID: req.user.id } },
-    })
+    PostModel.findByIdAndUpdate(
+      id,
+      {
+        $inc: { dislikes: -1, likes: 1 },
+        $push: { liked_by: { userID: req.user.id } },
+        $pull: { disliked_by: { userID: req.user.id } },
+      },
+      { new: true }
+    )
       .then((result) => {
-        res.status(200).send({ msg: "Liked" });
+        console.log("Removed dislike, added like");
+        res.status(200).send(result);
       })
       .catch((error) => {
         res.status(400);
       });
   } else if (liked) {
-    res.status(401).send("Already Liked");
+    res.status(400).send("Already Liked");
   } else {
-    PostModel.findByIdAndUpdate(id, {
-      $push: { liked_by: { userID: req.user.id } },
-      $inc: { likes: 1 },
-    })
+    PostModel.findByIdAndUpdate(
+      id,
+      {
+        $push: { liked_by: { userID: req.user.id } },
+        $inc: { likes: 1 },
+      },
+      { new: true }
+    )
       .then((result) => {
-        res.status(200).send({ msg: "Liked" });
+        console.log("Liked");
+        res.status(200).send(result);
       })
       .catch((error) => {
         res.status(400);

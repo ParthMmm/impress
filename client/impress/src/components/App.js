@@ -5,6 +5,7 @@ import BottomNav from "./BottomNav";
 import Create from "./Create";
 import Header from "./Header";
 import Landing from "./Landing";
+import LoadingScreen from "./LoadingScreen";
 import Login from "./Login";
 import Profile from "./Profile";
 import Register from "./Register";
@@ -20,6 +21,7 @@ function App() {
           <Route exact path="/login" component={Login} />
           <Route exact path="/profile" component={Profile} />
           <Route exact path="/create" component={Create} />
+          <Route exact path="/loading" component={LoadingScreen} />
           <BottomNav />
         </div>
       </Router>
