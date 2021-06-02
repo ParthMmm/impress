@@ -10,6 +10,7 @@ const persistConfig = {
   // configuration object for redux-persist
   key: "root",
   storage: storage, // define which storage to use
+  whitelist: ["auth", "user"],
 };
 
 const persistedReducer = persistReducer(persistConfig, reducers); // create a persisted reducer

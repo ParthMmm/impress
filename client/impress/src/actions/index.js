@@ -1,12 +1,24 @@
 import axios from "axios";
 
-import { AUTH_RESET, FETCH_LIKES, USER_LOGOUT, USER_REGISTER } from "./types";
+import {
+  AUTH_RESET,
+  FETCH_LIKES,
+  USER_LOGOUT,
+  USER_REGISTER,
+  LIKE_SUCCESS,
+  LIKE_ERROR,
+  FETCH_DISLIKES,
+  LIKE_POST,
+  DISLIKE_POST,
+  FETCH_LIKES_SUCCESS,
+} from "./types";
 import { USER_LOGIN } from "./types";
 import { USER_PROFILE } from "./types";
 import { LOGIN_ERROR } from "./types";
 import { FETCH_POSTS } from "./types";
 import { FETCH_ACCESSORIES } from "./types";
 import history from "../util/history";
+import { persist } from "../util/store";
 
 export const userRegister = (data) => async (dispatch) => {
   const res = await axios.post(
@@ -34,7 +46,11 @@ export const userLogin = (data) => async (dispatch) => {
     });
   } else {
     const { token } = res.data;
-    history.push("/");
+    // history.push("/");
+    history.push({
+      pathname: "/loading",
+      state: { message: "Fetching Your Info  😎", path: "/" },
+    });
     dispatch({ type: USER_LOGIN, payload: { token, authorized: true } });
   }
 };
@@ -49,13 +65,22 @@ export const userProfile = (token) => async (dispatch) => {
 };
 
 export const userLogOut = () => async (dispatch) => {
-  await axios.get(`${process.env.REACT_APP_LOCAL_SERVER}api/logout`);
-  history.push("/");
-  dispatch({ type: AUTH_RESET });
+  await axios
+    .get(`${process.env.REACT_APP_LOCAL_SERVER}api/logout`)
+    .then(() => dispatch({ type: AUTH_RESET }))
+    .then(() => persist.flush())
+    .then(() =>
+      history.push({
+        pathname: "/loading",
+        state: { message: "Signing Out  ", path: "/" },
+      })
+    );
 };
 
 export const authError = () => (dispatch) => {
   console.log("error");
+  persist.flush();
+
   dispatch({ type: AUTH_RESET });
 };
 
@@ -115,6 +140,11 @@ export const likePost = (token, id) => async (dispatch) => {
     objID,
     { headers: { Authorization: `Bearer ${token}` } }
   );
+  if (res.status === 400) {
+    // dispatch({ type: LIKE_ERROR });
+  } else if (res.status === 200) {
+    dispatch({ type: LIKE_POST, payload: res.data });
+  }
 
   // dispatch({ type: FETCH_POSTS, payload: res.data });
 };
@@ -127,19 +157,31 @@ export const dislikePost = (token, id) => async (dispatch) => {
     objID,
     { headers: { Authorization: `Bearer ${token}` } }
   );
-
-  // dispatch({ type: FETCH_POSTS, payload: res.data });
+  if (res.status === 400) {
+    // dispatch({ type: LIKE_ERROR });
+  } else if (res.status === 200) {
+    dispatch({ type: DISLIKE_POST, payload: res.data });
+  }
 };
 
 export const fetchLikes = (token) => async (dispatch) => {
-  // const res = await axios.post(
-  //   `${process.env.REACT_APP_LOCAL_SERVER}user/find_likes?secret_token=${data}`
-  // );
+  await axios
+    .get(`${process.env.REACT_APP_LOCAL_SERVER}api/user/find_likes`, {
+      headers: { Authorization: `Bearer ${token}` },
+    })
+    .then((res) =>
+      dispatch({ type: FETCH_LIKES, payload: { likes: res.data } })
+    )
+    .then(() =>
+      dispatch({ type: FETCH_LIKES_SUCCESS, payload: { fetched: true } })
+    );
+};
 
+export const fetchDislikes = (token) => async (dispatch) => {
   const res = await axios.get(
-    `${process.env.REACT_APP_LOCAL_SERVER}api/user/find_likes`,
+    `${process.env.REACT_APP_LOCAL_SERVER}api/user/find_dislikes`,
     { headers: { Authorization: `Bearer ${token}` } }
   );
 
-  dispatch({ type: FETCH_LIKES, payload: res.data });
+  dispatch({ type: FETCH_DISLIKES, payload: { dislikes: res.data } });
 };
