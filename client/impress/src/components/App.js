@@ -5,7 +5,7 @@ import BottomNav from "./BottomNav";
 import Create from "./Create";
 import Header from "./Header";
 import Landing from "./Landing";
-import LoadingScreen from "./LoadingScreen";
+import LoadingScreen from "./Loaders/LoadingScreen";
 import Login from "./Login";
 import Profile from "./Profile";
 import Register from "./Register";

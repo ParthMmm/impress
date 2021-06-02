@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
+import history from "../../util/history";
 import Loader from "./Loader";
-import history from "../util/history";
 import { connect, useDispatch } from "react-redux";
 import {
   fetchPosts,
@@ -8,7 +8,8 @@ import {
   fetchDislikes,
   userProfile,
   fetchAccessories,
-} from ".././actions";
+} from "../../actions";
+import SkeletonLoader from "./SkeletonLoader";
 
 function LoadingScreen({
   location,
@@ -50,7 +51,8 @@ function LoadingScreen({
 
   return (
     <div>
-      <Loader message={msg}></Loader>
+      <SkeletonLoader></SkeletonLoader>
+      {/* <Loader message={msg}></Loader> */}
     </div>
   );
 }
