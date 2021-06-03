@@ -10,7 +10,7 @@ function Landing({ token }) {
   }, []);
 
   return (
-    <div className="overflow-hidden ">
+    <div className="overflow-hidden sticky ">
       <div className="flex flex-row overflow-hidden h-screen sticky justify-center my-16 mt-15 pt-1 ">
         <div className=" overflow-hidden sticky flex flex-1 ">
           {/* <div className="hidden md:flex pt-5 pr-5 flex-col flex-auto sticky top-0 h-screen">

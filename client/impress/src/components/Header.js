@@ -15,22 +15,24 @@ function Header({ auth }) {
   switch (auth) {
     case true:
       return (
-        <div>
+        <div className="overscroll-none overflow-hidden	">
           <nav className=" dark:bg-gray-800 items-center pl-6 pr-6 pt-4 pb-4 fixed w-full z-10 top-0">
-            <div className="flex flex-row justify-between items-center ">
-              <span
-                className="text-blue-500 font-semibold  text-2xl tracking-tight cursor-pointer antialiased"
-                onClick={() => history.push("/")}
-              >
-                Im
+            <div className="flex flex-row justify-between items-center  ">
+              <div className="lg:pl-64 pl-0">
                 <span
-                  className="text-black font-semibold  text-2xl tracking-tight hover:text-blue-500  dark:text-white cursor-pointer antialiased transition-colors"
+                  className="text-blue-500 font-semibold  text-2xl tracking-tight cursor-pointer antialiased"
                   onClick={() => history.push("/")}
                 >
-                  press
+                  Im
+                  <span
+                    className="text-black font-semibold  text-2xl tracking-tight hover:text-blue-500  dark:text-white cursor-pointer antialiased transition-colors"
+                    onClick={() => history.push("/")}
+                  >
+                    press
+                  </span>
                 </span>
-              </span>
-              <div className="w-full hidden lg:flex lg:flex-row-reverse  items-center lg:w-auto antialiased h-0 ">
+              </div>
+              <div className="w-full hidden lg:flex lg:flex-row-reverse  items-center lg:w-auto antialiased h-0 lg:pr-60 pr-0 ">
                 <div className="pr-4">
                   {" "}
                   <button

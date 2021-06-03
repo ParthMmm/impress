@@ -10,7 +10,7 @@ function BottomNav({ authorized }) {
   switch (authorized) {
     case undefined:
       return (
-        <div className=" lg:hidden">
+        <div className=" lg:hidden overscroll-none overflow-hidden	">
           <nav className=" dark:bg-gray-800 bg-gray-800 pl-6 pr-6 pt-4 pb-4 fixed w-full h-50 z-10 bottom-0">
             <div className="flex items-center justify-between text-white">
               <button onClick={() => menuItemClick("/")}>
