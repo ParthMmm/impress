@@ -32,7 +32,7 @@ function Login({ error, auth, msg }) {
         <h1 className="font-bold text-center text-4xl text-blue-500 pb-1 cursor-default">
           Im<span className="text-black dark:text-white">press</span>
         </h1>
-        <div className="flex flex-col justify-center sm:w-96 sm:m-auto mx-5 mb-5 space-y-8 rounded-xl border-2 border-blue-500 dark:border-white">
+        <div className="flex flex-col justify-center sm:w-96 sm:m-auto mx-5 mb-5 space-y-8 rounded-xl border-2 border-blue-500 shadow-xl dark:border-white">
           <form onSubmit={handleSubmit(onSubmit)}>
             <div className="flex flex-col bg-white p-10 rounded-lg shadow space-y-6">
               <h1 className="font-bold text-xl text-center cursor-default">

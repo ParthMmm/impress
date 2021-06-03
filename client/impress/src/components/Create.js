@@ -57,10 +57,12 @@ function Create({ id, username, token, lubes, films }) {
 
       setTimeout(() => {
         reset();
-        setMessage("Success!");
 
+        history.push({
+          pathname: "/loading",
+          state: { message: "", path: "/" },
+        });
         setLoader(false);
-        history.push("/");
       }, 1000);
     }
   };

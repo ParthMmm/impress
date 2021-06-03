@@ -34,11 +34,12 @@ function LoadingScreen({
   }
 
   useEffect(() => {
+    dispatch(fetchPosts());
+
     if (token) {
       dispatch(userProfile(token));
       dispatch(fetchLikes(token));
       dispatch(fetchDislikes(token));
-      dispatch(fetchPosts(token));
       dispatch(fetchAccessories());
 
       if ((posts && profile) || likedPosts || dislikedPosts || fetchData) {
