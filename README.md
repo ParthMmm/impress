@@ -4,7 +4,7 @@ Share and find mechanical keyboard switches.
 
 ## Features
 - User registration
-- User image uploading w/ Cloudinary
+- Image uploading w/ Cloudinary
 - Submitting posts
 - Liking & Disliking
 - Dark mode compatibility
@@ -21,7 +21,7 @@ Share and find mechanical keyboard switches.
 - Password
 - JWT
 
-### Todo
+## Todo
 
 - [ ] Pagination
 - [ ] Scrollbar fixes
@@ -32,3 +32,8 @@ Share and find mechanical keyboard switches.
   - [ ] Edit description
   - [ ] Edit user avatatar
 - [ ] Post comments?
+
+
+
+## License
+[MIT](https://github.com/ParthMmm/impress/blob/master/LICENSE)
