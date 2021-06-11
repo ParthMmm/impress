@@ -4,7 +4,8 @@ Share and find mechanical keyboard switches.
 
 ## Features
 - User registration
-- Upload images & posts 
+- User image uploading w/ Cloudinary
+- Submitting posts
 - Liking & Disliking
 - Dark mode compatibility
 - Responsive design
@@ -26,6 +27,7 @@ Share and find mechanical keyboard switches.
 - [ ] Scrollbar fixes
 - [ ] Various css fixes
 - [ ] Share button
+- [ ] Password reset
 - [ ] Edit Profiles
   - [ ] Edit description
   - [ ] Edit user avatatar
